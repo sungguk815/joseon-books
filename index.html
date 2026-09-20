@@ -8,18 +8,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ===== 설정 =====================================================
-   Apps Script 웹앱 /exec 주소를 아래 PROXY_URL 에 넣으면
-   '직접 찾기' 탭이 동작합니다. (script 태그 안에 있습니다)
-   ================================================================ */
 :root{
-  --ink:#1B2430;
-  --indigo:#2E4A7D;
-  --seal:#A8392C;
-  --paper:#F3F2EC;
-  --card:#FFFFFF;
-  --muted:#6C7480;
-  --line:#DEDCD2;
+  --ink:#1B2430; --indigo:#2E4A7D; --seal:#A8392C;
+  --paper:#F3F2EC; --card:#FFFFFF; --muted:#6C7480; --line:#DEDCD2;
   --radius:10px;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
@@ -27,116 +18,124 @@
 }
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
-body{
-  margin:0;background:var(--paper);color:var(--ink);
-  font-family:"IBM Plex Sans KR",system-ui,sans-serif;
-  font-size:15px;line-height:1.65;
-}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans KR",system-ui,sans-serif;font-size:15px;line-height:1.65}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px 120px}
 
-/* ── 머리말 ── */
 header{padding:28px 0 18px;border-bottom:1px solid var(--line)}
-header h1{
-  font-family:"Gowun Batang",serif;font-weight:700;
-  font-size:26px;line-height:1.35;margin:0 0 6px;letter-spacing:-.01em;
-}
+header h1{font-family:"Gowun Batang",serif;font-weight:700;font-size:26px;line-height:1.35;margin:0 0 6px;letter-spacing:-.01em}
 header p{margin:0;color:var(--muted);font-size:13.5px}
 
-/* ── 탭 ── */
 nav{display:flex;gap:2px;margin:18px 0 16px;background:#E8E7DF;padding:3px;border-radius:var(--radius)}
-nav button{
-  flex:1;border:0;background:transparent;padding:9px 4px;border-radius:8px;
-  font-family:inherit;font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer;
-}
+nav button{flex:1;border:0;background:transparent;padding:9px 4px;border-radius:8px;
+  font-family:inherit;font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer}
 nav button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(27,36,48,.08)}
 nav button:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
+.badge{display:inline-block;min-width:17px;padding:0 5px;margin-left:4px;border-radius:999px;
+  background:var(--indigo);color:#fff;font-size:11px;line-height:17px;vertical-align:1px}
+.badge:empty,.badge[hidden]{display:none}
 
-/* ── 입력 ── */
 .search{display:flex;gap:8px;margin-bottom:12px}
-.search input{
-  flex:1;min-width:0;padding:11px 13px;border:1px solid var(--line);border-radius:var(--radius);
-  background:var(--card);font-family:inherit;font-size:15px;color:var(--ink);
-}
+.search input{flex:1;min-width:0;padding:11px 13px;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--card);font-family:inherit;font-size:15px;color:var(--ink)}
 .search input:focus{outline:2px solid var(--indigo);outline-offset:-1px;border-color:var(--indigo)}
-.search button{
-  padding:11px 16px;border:0;border-radius:var(--radius);background:var(--indigo);color:#fff;
-  font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;
-}
+.search button{padding:11px 16px;border:0;border-radius:var(--radius);background:var(--indigo);color:#fff;
+  font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap}
 
-/* ── 필터 칩 ── */
 .chiprow{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:4px;-webkit-overflow-scrolling:touch}
 .chiprow::-webkit-scrollbar{display:none}
-.chip{
-  flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--muted);
-  padding:6px 12px;border-radius:999px;font-family:inherit;font-size:13px;cursor:pointer;
-}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--muted);
+  padding:6px 12px;border-radius:999px;font-family:inherit;font-size:13px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
 .chip:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
 .filterlabel{font-size:12.5px;color:var(--muted);margin:6px 0 4px}
 
-/* ── 카드 ── */
 .count{font-size:12.5px;color:var(--muted);margin:10px 0 8px}
 ul.list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.book{
-  position:relative;background:var(--card);border:1px solid var(--line);
-  border-radius:var(--radius);padding:14px 15px;
-}
-.book.picked{border-color:var(--seal)}
-.book h3{
-  font-family:"Gowun Batang",serif;font-size:17.5px;font-weight:700;
-  margin:0 0 4px;line-height:1.4;padding-right:54px;
-}
+.book{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 15px;cursor:pointer}
+.book:hover{border-color:#C9C6B8}
+.book.cand{border-color:var(--indigo);background:#FAFBFD}
+.book.final{border-color:var(--seal);background:#FDFAF9}
+.book h3{font-family:"Gowun Batang",serif;font-size:17.5px;font-weight:700;margin:0 0 4px;line-height:1.4;padding-right:54px}
 .meta{font-size:13px;color:var(--muted);margin:0 0 9px}
 .tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
 .tag{font-size:11.5px;padding:2px 8px;border-radius:4px;background:#EFEEE7;color:#555B64}
 .tag.unit{background:#E8EDF6;color:var(--indigo)}
 .note{font-size:13.5px;color:#454C56;margin:0 0 12px}
-.pick{
-  border:1px solid var(--indigo);background:transparent;color:var(--indigo);
-  padding:7px 14px;border-radius:8px;font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;
-}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.pick{border:1px solid var(--indigo);background:transparent;color:var(--indigo);padding:7px 14px;border-radius:8px;
+  font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer}
+.pick.on{background:var(--indigo);color:#fff}
 .pick:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
-.book.picked .pick{border-color:var(--line);color:var(--muted)}
+.more{border:1px solid var(--line);background:transparent;color:var(--muted);padding:7px 12px;border-radius:8px;
+  font-family:inherit;font-size:13.5px;cursor:pointer}
 
-/* 고른 책에 찍히는 인장 */
-.seal{
-  position:absolute;top:12px;right:13px;width:42px;height:42px;border-radius:50%;
-  border:2px solid var(--seal);color:var(--seal);display:none;
-  align-items:center;justify-content:center;
-  font-family:"Gowun Batang",serif;font-size:15px;font-weight:700;letter-spacing:-1px;
-  transform:rotate(-8deg);opacity:.9;
-}
-.book.picked .seal{display:flex;animation:stamp .28s cubic-bezier(.2,1.4,.5,1)}
+.seal{position:absolute;top:12px;right:13px;width:42px;height:42px;border-radius:50%;
+  border:2px solid var(--seal);color:var(--seal);display:none;align-items:center;justify-content:center;
+  font-family:"Gowun Batang",serif;font-size:15px;font-weight:700;letter-spacing:-1px;transform:rotate(-8deg);opacity:.9}
+.book.final .seal{display:flex;animation:stamp .28s cubic-bezier(.2,1.4,.5,1)}
 @keyframes stamp{from{transform:rotate(-8deg) scale(1.9);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:.9}}
-@media (prefers-reduced-motion:reduce){.book.picked .seal{animation:none}}
+@media (prefers-reduced-motion:reduce){.book.final .seal{animation:none}}
 
-/* 검색 결과 썸네일 */
 .hit{display:flex;gap:12px}
 .hit img{width:58px;height:82px;object-fit:cover;border-radius:4px;background:#EFEEE7;flex:0 0 auto}
 .hit .body{flex:1;min-width:0}
 
-/* ── 안내·상태 ── */
 .msg{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;color:var(--muted);font-size:13.5px}
 .msg strong{color:var(--ink);font-weight:600}
 .warn{border-color:#E4C9A8;background:#FBF4E9;color:#7A5A2E}
 
-/* ── 내가 고른 책 ── */
-.slip{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
-.slip h2{font-family:"Gowun Batang",serif;font-size:19px;margin:0 0 14px;font-weight:700}
+.slip{background:var(--card);border:1px solid var(--seal);border-radius:var(--radius);padding:18px;margin-bottom:18px}
+.slip h2{font-family:"Gowun Batang",serif;font-size:19px;margin:0 0 4px;font-weight:700}
+.slip .lead{font-size:12.5px;color:var(--muted);margin:0 0 14px}
 .slip dl{margin:0;display:grid;grid-template-columns:72px 1fr;gap:9px 10px;font-size:14px}
 .slip dt{color:var(--muted);font-size:13px}
 .slip dd{margin:0;word-break:break-all}
 .slipactions{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
-.btn{padding:10px 16px;border-radius:8px;font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.btn{padding:10px 16px;border-radius:8px;font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;
+  border:1px solid var(--line);background:var(--card);color:var(--ink)}
 .btn.primary{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.btn.quiet{color:var(--muted)}
 .btn:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
 
-/* ── 토스트 ── */
-#toast{
-  position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
+.section-title{font-size:13px;color:var(--muted);margin:22px 0 8px}
+.cand{position:relative}
+ul.cands{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.candrow{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;
+  display:flex;gap:10px;align-items:flex-start}
+.candrow .t{flex:1;min-width:0}
+.candrow h4{font-family:"Gowun Batang",serif;font-size:16px;font-weight:700;margin:0 0 2px;line-height:1.4}
+.candrow p{margin:0;font-size:12.5px;color:var(--muted)}
+.candrow .ops{display:flex;gap:6px;flex:0 0 auto}
+.mini{border:1px solid var(--line);background:transparent;color:var(--ink);padding:6px 10px;border-radius:7px;
+  font-family:inherit;font-size:12.5px;cursor:pointer;white-space:nowrap}
+.mini.seal{position:static;width:auto;height:auto;border-radius:7px;transform:none;opacity:1;
+  border:1px solid var(--seal);color:var(--seal);display:block;font-family:inherit;font-size:12.5px;font-weight:400;letter-spacing:0}
+.mini.del{color:var(--muted)}
+
+dialog{border:0;padding:0;border-radius:14px;max-width:560px;width:calc(100% - 28px);
+  background:var(--card);color:var(--ink);box-shadow:0 12px 40px rgba(27,36,48,.22)}
+dialog::backdrop{background:rgba(27,36,48,.45)}
+.dlg{padding:20px;max-height:82vh;overflow:auto}
+.dlghead{display:flex;gap:14px;margin-bottom:14px}
+.dlghead img{width:84px;height:120px;object-fit:cover;border-radius:5px;background:#EFEEE7;flex:0 0 auto}
+.dlghead .t{flex:1;min-width:0}
+.dlghead h3{font-family:"Gowun Batang",serif;font-size:20px;font-weight:700;margin:0 0 6px;line-height:1.35}
+.dlghead p{margin:0;font-size:13px;color:var(--muted)}
+.dlgbody dl{margin:0 0 14px;display:grid;grid-template-columns:70px 1fr;gap:7px 10px;font-size:13.5px;
+  border-top:1px solid var(--line);padding-top:14px}
+.dlgbody dt{color:var(--muted);font-size:12.5px}
+.dlgbody dd{margin:0;word-break:break-all}
+.dlgbody .intro{font-size:14px;color:#3D444E;margin:0 0 14px;line-height:1.72}
+.dlgbody .teacher{background:#F5F7FA;border-left:3px solid var(--indigo);padding:11px 13px;border-radius:0 6px 6px 0;
+  font-size:13.5px;color:#3D444E;margin:0 0 14px}
+.dlglink{font-size:13px;color:var(--indigo)}
+.dlgfoot{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px}
+
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
   background:var(--ink);color:#fff;padding:11px 18px;border-radius:999px;font-size:13.5px;
-  opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;max-width:90vw;text-align:center;
-}
+  opacity:0;pointer-events:none;transition:opacity .2s;z-index:30;max-width:90vw;text-align:center}
 #toast.on{opacity:1}
 
 footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
@@ -148,50 +147,40 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
 
 <header>
   <h1>조선 역사 읽기와 탐구</h1>
-  <p>읽을 책 한 권을 고르고, 기록장 맨 앞장에 옮겨 적으세요.</p>
+  <p>마음에 드는 책을 여러 권 담아두고 비교한 뒤, 읽을 책 한 권을 정하세요.</p>
 </header>
 
 <nav role="tablist">
   <button role="tab" id="tab-rec" aria-controls="panel-rec" aria-selected="true">추천 목록</button>
   <button role="tab" id="tab-find" aria-controls="panel-find" aria-selected="false">직접 찾기</button>
-  <button role="tab" id="tab-my" aria-controls="panel-my" aria-selected="false">내가 고른 책</button>
+  <button role="tab" id="tab-my" aria-controls="panel-my" aria-selected="false">담은 책<span class="badge" id="candBadge" hidden></span></button>
 </nav>
 
-<!-- 추천 목록 -->
 <section id="panel-rec" role="tabpanel" aria-labelledby="tab-rec">
-  <div class="search">
-    <input id="recQ" type="search" placeholder="제목이나 저자로 걸러보기" autocomplete="off">
-  </div>
-
+  <div class="search"><input id="recQ" type="search" placeholder="제목이나 저자로 걸러보기" autocomplete="off"></div>
   <p class="filterlabel">교과서 단원</p>
   <div class="chiprow" id="unitChips"></div>
-
   <p class="filterlabel">종류와 난이도</p>
   <div class="chiprow" id="kindChips"></div>
-
   <p class="count" id="recCount"></p>
   <ul class="list" id="recList"></ul>
 </section>
 
-<!-- 직접 찾기 -->
 <section id="panel-find" role="tabpanel" aria-labelledby="tab-find" hidden>
   <div class="search">
     <input id="findQ" type="search" placeholder="예: 임진왜란, 정조, 조선 만화" autocomplete="off">
     <button id="findBtn">찾기</button>
   </div>
-
   <p class="filterlabel">이런 말로 찾아보세요</p>
   <div class="chiprow" id="seedChips"></div>
-
-  <div id="findState" class="msg">조선시대를 다룬 책이면 만화도, 소설도 괜찮습니다. 검색한 책은 선생님 확인을 받은 뒤 읽기 시작하세요.</div>
+  <div id="findState" class="msg">조선시대를 다룬 책이면 만화도, 소설도 괜찮습니다. 찾은 책은 선생님 확인을 받은 뒤 읽기 시작하세요.</div>
   <ul class="list" id="findList"></ul>
 </section>
 
-<!-- 내가 고른 책 -->
 <section id="panel-my" role="tabpanel" aria-labelledby="tab-my" hidden>
-  <div id="myEmpty" class="msg">아직 고른 책이 없습니다. <strong>추천 목록</strong>이나 <strong>직접 찾기</strong>에서 책을 고르면 여기에 담깁니다.</div>
-  <div id="myCard" class="slip" hidden>
-    <h2>기록장에 옮겨 적을 내용</h2>
+  <div id="finalCard" class="slip" hidden>
+    <h2>읽기로 정한 책</h2>
+    <p class="lead">아래 내용을 기록장 맨 앞장에 옮겨 적으세요.</p>
     <dl>
       <dt>서명</dt><dd id="mTitle"></dd>
       <dt>저자</dt><dd id="mAuthor"></dd>
@@ -202,8 +191,15 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
     </dl>
     <div class="slipactions">
       <button class="btn primary" id="copyBtn">내용 복사</button>
-      <button class="btn" id="clearBtn">다시 고르기</button>
+      <button class="btn quiet" id="unfinalBtn">정한 것 취소</button>
     </div>
+  </div>
+
+  <p class="section-title" id="candTitle" hidden>고민 중인 책</p>
+  <div id="myEmpty" class="msg">아직 담은 책이 없습니다. <strong>추천 목록</strong>이나 <strong>직접 찾기</strong>에서 마음에 드는 책을 담아보세요. 여러 권 담아두고 나중에 하나만 정하면 됩니다.</div>
+  <ul class="cands" id="candList"></ul>
+  <div class="slipactions" id="clearWrap" hidden>
+    <button class="btn quiet" id="clearAllBtn">담은 책 모두 비우기</button>
   </div>
 </section>
 
@@ -211,35 +207,48 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
   쪽수와 도서관 소장 여부는 학교 도서관에서 확인하세요.<br>
   도서 정보 검색 © Kakao
 </footer>
-
 </div>
+
+<dialog id="dlg">
+  <div class="dlg">
+    <div class="dlghead">
+      <img id="dThumb" alt="">
+      <div class="t">
+        <h3 id="dTitle"></h3>
+        <p id="dWho"></p>
+      </div>
+    </div>
+    <div class="dlgbody">
+      <div id="dTeacher" class="teacher" hidden></div>
+      <p id="dIntro" class="intro" hidden></p>
+      <dl id="dFacts"></dl>
+      <p id="dLinkWrap" hidden><a id="dLink" class="dlglink" href="#" target="_blank" rel="noopener">책 정보 더 보기</a></p>
+    </div>
+    <div class="dlgfoot">
+      <button class="btn primary" id="dPick">이 책 담기</button>
+      <button class="btn" id="dFinal">읽을 책으로 정하기</button>
+      <button class="btn quiet" id="dClose">닫기</button>
+    </div>
+  </div>
+</dialog>
+
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* ================================================================
-   1. Apps Script 웹앱 주소  ('직접 찾기' 탭에 필요)
-   ================================================================ */
+/* ===== Apps Script 웹앱 주소 ===== */
 const PROXY_URL = 'https://script.google.com/macros/s/AKfycbxQ_y3eFVav19Gu0okmBJFhxQKKuH6cxWxf0NyHiNdctVekWVRCjwTPbPvk7thUUJkZ/exec'; // 예: 'https://script.google.com/macros/s/AKfycb.../exec'
 
-/* ================================================================
-   2. 교과서 단원
-   ================================================================ */
 const UNITS = {
-  all:{label:'조선 전체',   full:'조선 전 시기'},
-  u1: {label:'건국·통치',   full:'4-1 조선의 건국과 통치 체제'},
-  u2: {label:'사림·붕당',   full:'4-2 사림 세력과 붕당'},
-  u3: {label:'전기 문화',   full:'4-3 조선 전기의 문화'},
-  u4: {label:'왜란·호란',   full:'4-4 왜란과 호란'},
-  u5: {label:'후기 정치',   full:'5-1 조선 후기 정치 변동'},
-  u6: {label:'향촌·농민',   full:'5-2 향촌 변화와 농민 봉기'}
+  all:{label:'조선 전체', full:'조선 전 시기'},
+  u1:{label:'건국·통치', full:'4-1 조선의 건국과 통치 체제'},
+  u2:{label:'사림·붕당', full:'4-2 사림 세력과 붕당'},
+  u3:{label:'전기 문화', full:'4-3 조선 전기의 문화'},
+  u4:{label:'왜란·호란', full:'4-4 왜란과 호란'},
+  u5:{label:'후기 정치', full:'5-1 조선 후기 정치 변동'},
+  u6:{label:'향촌·농민', full:'5-2 향촌 변화와 농민 봉기'}
 };
 
-/* ================================================================
-   3. 추천 도서 목록  ← 선생님이 자유롭게 고치는 부분
-      genre: 만화 | 교양 | 소설 | 고전
-      level: 입문 | 표준 | 도전
-      len  : 짧음 | 보통 | 김
-   ================================================================ */
+/* ===== 추천 도서 목록 (자유롭게 수정) ===== */
 const BOOKS = [
  {t:'박시백의 조선왕조실록', a:'박시백', p:'휴머니스트', genre:'만화', level:'입문', len:'보통', u:['all'],
   note:'20권짜리지만 한 권씩 따로 읽어도 됩니다. 실록을 그대로 옮긴 만화라 교과서와 맞춰보기 좋습니다.'},
@@ -287,238 +296,301 @@ const BOOKS = [
   note:'수령이 지켜야 할 것을 적은 책입니다. 뒤집어 읽으면 당시 관리들이 어땠는지 보입니다. 청소년용 편역본을 고르세요.'}
 ];
 
-/* ================================================================
-   4. 검색어 추천
-   ================================================================ */
 const SEEDS = ['조선 만화','임진왜란','이순신','세종','정조','실학','병자호란','조선 후기','사화','농민 봉기','한국사 청소년'];
 
-/* ================================================================
-   5. 동작
-   ================================================================ */
+/* ===== 공통 ===== */
 const $ = s => document.querySelector(s);
 const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const strip = s => String(s==null?'':s).replace(/<[^>]*>/g,'');
+const idOf = b => (b.title||'') + '|' + (b.author||'');
 
-let picked = null;
-const KEY = 'joseon-book-pick';
+let cands = [];      // 담은 책들
+let finalId = null;  // 읽기로 정한 책
+let openBook = null; // 팝업에 띄운 책
+const KEY = 'joseon-books-v2';
 
 function toast(m){
   const el = $('#toast'); el.textContent = m; el.classList.add('on');
   clearTimeout(el._t); el._t = setTimeout(()=>el.classList.remove('on'), 2000);
 }
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify({cands, finalId})); }catch(e){}
+}
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(raw){ const o = JSON.parse(raw); cands = o.cands||[]; finalId = o.finalId||null; }
+  }catch(e){ cands=[]; finalId=null; }
+}
+const inCands = id => cands.some(b=>idOf(b)===id);
 
-/* --- 탭 --- */
-const TABS = [['#tab-rec','#panel-rec'],['#tab-find','#panel-find'],['#tab-my','#panel-my']];
+/* ===== 탭 ===== */
+const TABS=[['#tab-rec','#panel-rec'],['#tab-find','#panel-find'],['#tab-my','#panel-my']];
 TABS.forEach(([t,p])=>{
-  $(t).addEventListener('click', ()=>{
-    TABS.forEach(([t2,p2])=>{
-      const on = t2===t;
-      $(t2).setAttribute('aria-selected', on);
-      $(p2).hidden = !on;
-    });
+  $(t).addEventListener('click',()=>{
+    TABS.forEach(([t2,p2])=>{ const on=t2===t; $(t2).setAttribute('aria-selected',on); $(p2).hidden=!on; });
     window.scrollTo({top:0});
   });
 });
 
-/* --- 필터 상태 --- */
-let fUnit = 'all', fGenre = '', fLevel = '';
-
-function chip(label, pressed){
-  return `<button class="chip" aria-pressed="${pressed}" data-v="${esc(label)}">${esc(label)}</button>`;
-}
+/* ===== 필터 ===== */
+let fUnit='all', fGenre='', fLevel='';
+const chip=(v,on)=>`<button class="chip" aria-pressed="${on}" data-v="${esc(v)}">${esc(v)}</button>`;
 
 function buildChips(){
-  const u = $('#unitChips');
-  u.innerHTML = ['all','u1','u2','u3','u4','u5','u6']
+  const u=$('#unitChips');
+  u.innerHTML=['all','u1','u2','u3','u4','u5','u6']
     .map(k=>`<button class="chip" aria-pressed="${k===fUnit}" data-u="${k}">${esc(k==='all'?'전체':UNITS[k].label)}</button>`).join('');
-  u.addEventListener('click', e=>{
-    const b = e.target.closest('[data-u]'); if(!b) return;
-    fUnit = b.dataset.u;
-    u.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed', c===b));
+  u.addEventListener('click',e=>{
+    const b=e.target.closest('[data-u]'); if(!b) return;
+    fUnit=b.dataset.u;
+    u.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c===b));
     renderRec();
   });
 
-  const k = $('#kindChips');
-  k.innerHTML = ['만화','교양','소설','고전'].map(v=>chip(v,false)).join('')
-              + ['입문','표준','도전'].map(v=>chip(v,false)).join('');
-  k.addEventListener('click', e=>{
-    const b = e.target.closest('[data-v]'); if(!b) return;
-    const v = b.dataset.v, on = b.getAttribute('aria-pressed')==='true';
-    const isLevel = ['입문','표준','도전'].includes(v);
-    if(isLevel){ fLevel = on ? '' : v; } else { fGenre = on ? '' : v; }
-    k.querySelectorAll('.chip').forEach(c=>{
-      const cv = c.dataset.v;
-      c.setAttribute('aria-pressed', cv===fGenre || cv===fLevel);
-    });
+  const k=$('#kindChips');
+  k.innerHTML=['만화','교양','소설','고전'].map(v=>chip(v,false)).join('')+['입문','표준','도전'].map(v=>chip(v,false)).join('');
+  k.addEventListener('click',e=>{
+    const b=e.target.closest('[data-v]'); if(!b) return;
+    const v=b.dataset.v, on=b.getAttribute('aria-pressed')==='true';
+    if(['입문','표준','도전'].includes(v)) fLevel = on?'':v; else fGenre = on?'':v;
+    k.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed', c.dataset.v===fGenre || c.dataset.v===fLevel));
     renderRec();
   });
 
-  const s = $('#seedChips');
-  s.innerHTML = SEEDS.map(v=>chip(v,false)).join('');
-  s.addEventListener('click', e=>{
-    const b = e.target.closest('[data-v]'); if(!b) return;
-    $('#findQ').value = b.dataset.v;
-    runSearch();
+  const s=$('#seedChips');
+  s.innerHTML=SEEDS.map(v=>chip(v,false)).join('');
+  s.addEventListener('click',e=>{
+    const b=e.target.closest('[data-v]'); if(!b) return;
+    $('#findQ').value=b.dataset.v; runSearch();
   });
 }
 
-/* --- 추천 목록 --- */
+/* ===== 카드 ===== */
+function toBook(b){ // 추천 도서 -> 공통 형식
+  return {title:b.t, author:b.a, pub:b.p, year:'', isbn:'', thumb:'',
+    unit:b.u.map(k=>UNITS[k].full).join(', '), note:b.note, contents:'', url:'',
+    genre:b.genre, level:b.level, len:b.len, src:'rec'};
+}
+function toHit(d){
+  return {title:strip(d.title), author:(d.authors||[]).join(', '), pub:d.publisher||'', year:d.year||'',
+    isbn:d.isbn||'', thumb:d.thumbnail||'', unit:'', note:'', contents:strip(d.contents||''), url:d.url||'',
+    trans:(d.translators||[]).join(', '), status:d.status||'', src:'find'};
+}
+
+function cardRec(b){
+  const o=toBook(b), id=idOf(o), on=inCands(id), fin=finalId===id;
+  const units=b.u.map(k=>`<span class="tag unit">${esc(UNITS[k].label)}</span>`).join('');
+  return `<li class="book ${on?'cand':''} ${fin?'final':''}" data-book="${esc(JSON.stringify(o))}">
+    <div class="seal">선택</div>
+    <h3>${esc(b.t)}</h3>
+    <p class="meta">${esc(b.a)} · ${esc(b.p)}</p>
+    <div class="tags"><span class="tag">${esc(b.genre)}</span><span class="tag">${esc(b.level)}</span><span class="tag">분량 ${esc(b.len)}</span>${units}</div>
+    <p class="note">${esc(b.note)}</p>
+    <div class="actions">
+      <button class="pick ${on?'on':''}" data-toggle>${on?'담음 ✓':'담기'}</button>
+      <button class="more" data-more>자세히</button>
+    </div>
+  </li>`;
+}
+
+function cardHit(d){
+  const o=toHit(d), id=idOf(o), on=inCands(id), fin=finalId===id;
+  const who=[o.author,o.pub,o.year].filter(Boolean).join(' · ');
+  const thumb=o.thumb?`<img src="${esc(o.thumb)}" alt="" loading="lazy">`:'<img alt="">';
+  return `<li class="book ${on?'cand':''} ${fin?'final':''}" data-book="${esc(JSON.stringify(o))}">
+    <div class="seal">선택</div>
+    <div class="hit">${thumb}
+      <div class="body">
+        <h3>${esc(o.title)}</h3>
+        <p class="meta">${esc(who)}</p>
+        ${o.contents?`<p class="note">${esc(o.contents.slice(0,110))}…</p>`:''}
+        <div class="actions">
+          <button class="pick ${on?'on':''}" data-toggle>${on?'담음 ✓':'담기'}</button>
+          <button class="more" data-more>자세히</button>
+        </div>
+      </div>
+    </div>
+  </li>`;
+}
+
 function renderRec(){
-  const q = $('#recQ').value.trim().toLowerCase();
-  const rows = BOOKS.filter(b=>{
+  const q=$('#recQ').value.trim().toLowerCase();
+  const rows=BOOKS.filter(b=>{
     if(fUnit!=='all' && !b.u.includes(fUnit) && !b.u.includes('all')) return false;
     if(fGenre && b.genre!==fGenre) return false;
     if(fLevel && b.level!==fLevel) return false;
     if(q && !(b.t+b.a+b.p).toLowerCase().includes(q)) return false;
     return true;
   });
-
-  $('#recCount').textContent = rows.length ? `${rows.length}권` : '';
+  $('#recCount').textContent = rows.length?`${rows.length}권`:'';
   $('#recList').innerHTML = rows.length ? rows.map(cardRec).join('')
     : '<li class="msg">조건에 맞는 책이 없습니다. 칩을 하나 풀어보세요.</li>';
-  markPicked();
 }
 
-function cardRec(b){
-  const units = b.u.map(k=>`<span class="tag unit">${esc(UNITS[k].label)}</span>`).join('');
-  const data = esc(JSON.stringify({title:b.t,author:b.a,pub:b.p,year:'',isbn:'',unit:b.u.map(k=>UNITS[k].full).join(', ')}));
-  return `<li class="book" data-title="${esc(b.t)}">
-    <div class="seal">선택</div>
-    <h3>${esc(b.t)}</h3>
-    <p class="meta">${esc(b.a)} · ${esc(b.p)}</p>
-    <div class="tags"><span class="tag">${esc(b.genre)}</span><span class="tag">${esc(b.level)}</span><span class="tag">분량 ${esc(b.len)}</span>${units}</div>
-    <p class="note">${esc(b.note)}</p>
-    <button class="pick" data-pick="${data}">이 책 고르기</button>
-  </li>`;
-}
-
-/* --- 직접 찾기 --- */
+/* ===== 검색 ===== */
+let lastHits=[];
 async function runSearch(){
-  const q = $('#findQ').value.trim();
-  const state = $('#findState'), list = $('#findList');
-  list.innerHTML = '';
-
+  const q=$('#findQ').value.trim(), state=$('#findState'), list=$('#findList');
+  list.innerHTML='';
   if(!q){ state.hidden=false; state.className='msg'; state.textContent='찾고 싶은 말을 넣어주세요.'; return; }
-
   if(!PROXY_URL){
     state.hidden=false; state.className='msg warn';
-    state.innerHTML='검색 서버가 아직 연결되지 않았습니다. 선생님께 알려주세요. <br>그동안은 <strong>추천 목록</strong>에서 골라도 됩니다.';
+    state.innerHTML='검색 서버가 아직 연결되지 않았습니다. 선생님께 알려주세요.<br>그동안은 <strong>추천 목록</strong>에서 골라도 됩니다.';
     return;
   }
-
   state.hidden=false; state.className='msg'; state.textContent='찾는 중…';
-
   try{
-    const res = await fetch(`${PROXY_URL}?q=${encodeURIComponent(q)}&size=15`);
-    const data = await res.json();
-
-    if(!data.ok){
-      state.className='msg warn';
-      state.textContent = data.message || '검색에 실패했습니다. 잠시 뒤 다시 해보세요.';
-      return;
-    }
-    if(!data.items.length){
-      state.className='msg';
-      state.textContent = '찾은 책이 없습니다. 더 짧은 말로 바꿔보세요.';
-      return;
-    }
-    state.hidden = true;
-    list.innerHTML = data.items.map(cardHit).join('');
-    markPicked();
+    const res=await fetch(`${PROXY_URL}?q=${encodeURIComponent(q)}&size=15`);
+    const data=await res.json();
+    if(!data.ok){ state.className='msg warn'; state.textContent=data.message||'검색에 실패했습니다. 잠시 뒤 다시 해보세요.'; return; }
+    if(!data.items.length){ state.className='msg'; state.textContent='찾은 책이 없습니다. 더 짧은 말로 바꿔보세요.'; return; }
+    state.hidden=true; lastHits=data.items;
+    list.innerHTML=data.items.map(cardHit).join('');
   }catch(err){
-    state.className='msg warn';
-    state.textContent='검색 서버에 닿지 못했습니다. 인터넷 연결을 확인해 주세요.';
+    state.className='msg warn'; state.textContent='검색 서버에 닿지 못했습니다. 인터넷 연결을 확인해 주세요.';
   }
 }
 
-function cardHit(d){
-  const title = strip(d.title);
-  const who = [d.authors.join(', '), d.publisher, d.year].filter(Boolean).join(' · ');
-  const data = esc(JSON.stringify({title,author:d.authors.join(', '),pub:d.publisher,year:d.year,isbn:d.isbn,unit:''}));
-  const thumb = d.thumbnail ? `<img src="${esc(d.thumbnail)}" alt="" loading="lazy">` : '<img alt="">';
-  return `<li class="book" data-title="${esc(title)}">
-    <div class="seal">선택</div>
-    <div class="hit">${thumb}
-      <div class="body">
-        <h3>${esc(title)}</h3>
-        <p class="meta">${esc(who)}</p>
-        ${d.contents ? `<p class="note">${esc(strip(d.contents))}…</p>` : ''}
-        <button class="pick" data-pick="${data}">이 책 고르기</button>
-      </div>
-    </div>
-  </li>`;
+/* ===== 담기 / 정하기 / 빼기 ===== */
+function addCand(b){
+  const id=idOf(b);
+  if(inCands(id)){ toast('이미 담은 책입니다.'); return; }
+  cands.push(b); save(); refreshAll(); toast('담았습니다.');
+}
+function removeCand(id){
+  cands=cands.filter(b=>idOf(b)!==id);
+  if(finalId===id) finalId=null;
+  save(); refreshAll(); toast('뺐습니다.');
+}
+function toggleCand(b){
+  const id=idOf(b);
+  if(inCands(id)) removeCand(id); else addCand(b);
+}
+function setFinal(b){
+  const id=idOf(b);
+  if(!inCands(id)) cands.push(b);
+  finalId=id; save(); refreshAll(); toast('읽을 책으로 정했습니다.');
 }
 
-/* --- 고르기 --- */
 document.addEventListener('click', e=>{
-  const b = e.target.closest('[data-pick]'); if(!b) return;
-  picked = JSON.parse(b.dataset.pick);
-  save(); renderMy(); markPicked();
-  toast('골랐습니다. 「내가 고른 책」에서 확인하세요.');
+  const li=e.target.closest('.book'); if(!li) return;
+  const b=JSON.parse(li.dataset.book);
+  if(e.target.closest('[data-toggle]')){ toggleCand(b); return; }
+  openDialog(b); // 카드 어디를 눌러도 팝업
 });
 
-function markPicked(){
-  document.querySelectorAll('.book').forEach(el=>{
-    const on = !!picked && el.dataset.title === picked.title;
-    el.classList.toggle('picked', on);
-    const btn = el.querySelector('.pick');
-    if(btn) btn.textContent = on ? '고른 책' : '이 책 고르기';
-  });
+/* ===== 팝업 ===== */
+const dlg=$('#dlg');
+function openDialog(b){
+  openBook=b;
+  $('#dTitle').textContent=b.title;
+  const who=[b.author, b.trans?`옮김 ${b.trans}`:'', b.pub, b.year].filter(Boolean).join(' · ');
+  $('#dWho').textContent=who;
+  const img=$('#dThumb');
+  if(b.thumb){ img.src=b.thumb; img.hidden=false; } else { img.removeAttribute('src'); img.hidden=true; }
+
+  const teach=$('#dTeacher');
+  if(b.note){ teach.textContent=b.note; teach.hidden=false; } else teach.hidden=true;
+
+  const intro=$('#dIntro');
+  if(b.contents){ intro.textContent=b.contents+'…'; intro.hidden=false; } else intro.hidden=true;
+
+  const facts=[];
+  if(b.unit) facts.push(['교과 단원', b.unit]);
+  if(b.genre) facts.push(['종류', b.genre]);
+  if(b.level) facts.push(['난이도', b.level]);
+  if(b.len) facts.push(['분량', b.len]);
+  if(b.pub) facts.push(['출판사', b.pub]);
+  if(b.year) facts.push(['출간', b.year+'년']);
+  if(b.isbn) facts.push(['ISBN', b.isbn]);
+  facts.push(['쪽수','책을 받아 직접 확인하세요']);
+  $('#dFacts').innerHTML=facts.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('');
+
+  if(b.url){ $('#dLink').href=b.url; $('#dLinkWrap').hidden=false; } else $('#dLinkWrap').hidden=true;
+
+  const on=inCands(idOf(b));
+  $('#dPick').textContent = on ? '담은 책에서 빼기' : '이 책 담기';
+  $('#dFinal').hidden = finalId===idOf(b);
+
+  if(typeof dlg.showModal==='function') dlg.showModal(); else dlg.setAttribute('open','');
+}
+function closeDialog(){ if(dlg.open) dlg.close(); else dlg.removeAttribute('open'); }
+$('#dClose').addEventListener('click', closeDialog);
+$('#dPick').addEventListener('click', ()=>{ toggleCand(openBook); closeDialog(); });
+$('#dFinal').addEventListener('click', ()=>{ setFinal(openBook); closeDialog(); });
+dlg.addEventListener('click', e=>{ if(e.target===dlg) closeDialog(); });
+
+/* ===== 담은 책 화면 ===== */
+function renderMy(){
+  const fin = cands.find(b=>idOf(b)===finalId) || null;
+  $('#finalCard').hidden = !fin;
+  if(fin){
+    $('#mTitle').textContent=fin.title||'';
+    $('#mAuthor').textContent=fin.author||'(확인 필요)';
+    $('#mPub').textContent=fin.pub||'(확인 필요)';
+    $('#mYear').textContent=fin.year||'(책 뒷면에서 확인)';
+    $('#mIsbn').textContent=fin.isbn||'(책 뒷면 바코드 위 숫자)';
+    $('#mUnit').textContent=fin.unit||'읽으면서 찾아 적기';
+  }
+  const others = cands.filter(b=>idOf(b)!==finalId);
+  $('#myEmpty').hidden = cands.length>0;
+  $('#candTitle').hidden = others.length===0;
+  $('#clearWrap').hidden = cands.length===0;
+  $('#candList').innerHTML = others.map(b=>{
+    const id=esc(idOf(b));
+    return `<li class="candrow">
+      <div class="t">
+        <h4>${esc(b.title)}</h4>
+        <p>${esc([b.author,b.pub].filter(Boolean).join(' · '))}</p>
+      </div>
+      <div class="ops">
+        <button class="mini seal" data-final="${id}">이걸로</button>
+        <button class="mini del" data-del="${id}">빼기</button>
+      </div>
+    </li>`;
+  }).join('');
+
+  const badge=$('#candBadge');
+  badge.textContent = cands.length || '';
+  badge.hidden = cands.length===0;
 }
 
-function renderMy(){
-  const has = !!picked;
-  $('#myEmpty').hidden = has;
-  $('#myCard').hidden = !has;
-  if(!has) return;
-  $('#mTitle').textContent = picked.title || '';
-  $('#mAuthor').textContent = picked.author || '(확인 필요)';
-  $('#mPub').textContent = picked.pub || '(확인 필요)';
-  $('#mYear').textContent = picked.year || '(책 뒷면에서 확인)';
-  $('#mIsbn').textContent = picked.isbn || '(책 뒷면 바코드 위 숫자)';
-  $('#mUnit').textContent = picked.unit || '읽으면서 찾아 적기';
-}
+$('#candList').addEventListener('click', e=>{
+  const f=e.target.closest('[data-final]'), d=e.target.closest('[data-del]');
+  if(f){ const b=cands.find(x=>idOf(x)===f.dataset.final); if(b) setFinal(b); }
+  if(d){ removeCand(d.dataset.del); }
+});
+$('#unfinalBtn').addEventListener('click', ()=>{ finalId=null; save(); refreshAll(); toast('정한 것을 취소했습니다. 담은 책에는 그대로 있습니다.'); });
+$('#clearAllBtn').addEventListener('click', ()=>{
+  if(!confirm('담은 책을 모두 지울까요?')) return;
+  cands=[]; finalId=null; save(); refreshAll(); toast('모두 비웠습니다.');
+});
 
 $('#copyBtn').addEventListener('click', async ()=>{
-  const text = [
-    `서명: ${picked.title}`,
-    `저자: ${picked.author||''}`,
-    `출판사: ${picked.pub||''}`,
-    `출간연도: ${picked.year||''}`,
-    `ISBN: ${picked.isbn||''}`,
-    `교과 단원: ${picked.unit||''}`
-  ].join('\n');
-  try{
-    await navigator.clipboard.writeText(text);
-    toast('복사했습니다.');
-  }catch(err){
-    const ta = document.createElement('textarea');
-    ta.value = text; document.body.appendChild(ta); ta.select();
-    try{ document.execCommand('copy'); toast('복사했습니다.'); }
-    catch(e2){ toast('복사가 안 됩니다. 손으로 옮겨 적어주세요.'); }
+  const b=cands.find(x=>idOf(x)===finalId); if(!b) return;
+  const text=[`서명: ${b.title}`,`저자: ${b.author||''}`,`출판사: ${b.pub||''}`,
+    `출간연도: ${b.year||''}`,`ISBN: ${b.isbn||''}`,`교과 단원: ${b.unit||''}`].join('\n');
+  try{ await navigator.clipboard.writeText(text); toast('복사했습니다.'); }
+  catch(err){
+    const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); toast('복사했습니다.'); }catch(e2){ toast('복사가 안 됩니다. 손으로 옮겨 적어주세요.'); }
     ta.remove();
   }
 });
 
-$('#clearBtn').addEventListener('click', ()=>{
-  picked = null; save(); renderMy(); markPicked();
-  toast('지웠습니다. 다시 골라보세요.');
-});
-
-function save(){
-  try{ picked ? localStorage.setItem(KEY, JSON.stringify(picked)) : localStorage.removeItem(KEY); }
-  catch(err){}
-}
-function load(){
-  try{ const raw = localStorage.getItem(KEY); if(raw) picked = JSON.parse(raw); }
-  catch(err){ picked = null; }
+/* ===== 갱신 ===== */
+function refreshAll(){
+  renderRec();
+  if(lastHits.length) $('#findList').innerHTML=lastHits.map(cardHit).join('');
+  renderMy();
 }
 
 $('#recQ').addEventListener('input', renderRec);
 $('#findBtn').addEventListener('click', runSearch);
 $('#findQ').addEventListener('keydown', e=>{ if(e.key==='Enter') runSearch(); });
 
-load(); buildChips(); renderRec(); renderMy();
+load(); buildChips(); refreshAll();
 </script>
 </body>
 </html>
