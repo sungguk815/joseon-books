@@ -63,6 +63,8 @@ ul.list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
 .tag{font-size:11.5px;padding:2px 8px;border-radius:4px;background:#EFEEE7;color:#555B64}
 .tag.unit{background:#E8EDF6;color:var(--indigo)}
+.tag.lib{background:#E7F1EA;color:#2F6B4A}
+.tag.nolib{background:#F0EEEA;color:#8A8377}
 .note{font-size:13.5px;color:#454C56;margin:0 0 12px}
 .actions{display:flex;gap:7px;flex-wrap:wrap}
 .pick{border:1px solid var(--indigo);background:transparent;color:var(--indigo);padding:7px 14px;border-radius:8px;
@@ -198,6 +200,7 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
     </dl>
     <div class="slipactions">
       <button class="btn primary" id="copyBtn">내용 복사</button>
+      <button class="btn" id="libBtn">도서관에서 찾기</button>
       <button class="btn quiet" id="unfinalBtn">정한 것 취소</button>
     </div>
   </div>
@@ -211,7 +214,7 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
 </section>
 
 <footer>
-  쪽수와 도서관 소장 여부는 학교 도서관에서 확인하세요.<br>
+  쪽수는 책을 받아 직접 확인하세요. 소장 여부는 도서관 검색으로 확인합니다.<br>
   표지와 책 소개 © Kakao
 </footer>
 </div>
@@ -239,6 +242,7 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
     <div class="dlgfoot">
       <button class="btn primary" id="dPick">이 책 담기</button>
       <button class="btn" id="dFinal">읽을 책으로 정하기</button>
+      <button class="btn" id="dLib">도서관에서 찾기</button>
       <button class="btn quiet" id="dClose">닫기</button>
     </div>
   </div>
@@ -249,6 +253,18 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
 <script>
 /* ===== Apps Script 웹앱 주소 ===== */
 const PROXY_URL = 'https://script.google.com/macros/s/AKfycbxQ_y3eFVav19Gu0okmBJFhxQKKuH6cxWxf0NyHiNdctVekWVRCjwTPbPvk7thUUJkZ/exec';
+
+/* ===== 학교 도서관 바로가기 =====
+   독서로는 외부에 공개된 검색 API가 없어 소장·대출 상태를 자동으로 가져올 수 없습니다.
+   그래서 버튼을 누르면 책 제목을 복사한 뒤 도서관 검색 화면을 새 탭으로 엽니다.
+   나중에 독서로가 검색어를 주소로 받아준다면 keywordParam 에 그 이름만 적으면
+   곧바로 검색된 화면이 열립니다. (예: keywordParam:'searchKeyword')
+   ================================= */
+const LIBRARY = {
+  name:'학교 도서관',
+  base:'https://read365.edunet.net/PureScreen/SchoolSearch?schoolName=%EB%8F%99%EA%B5%AD%EB%8C%80%ED%95%99%EA%B5%90%EC%82%AC%EB%B2%94%EB%8C%80%ED%95%99%EB%B6%80%EC%86%8D%EC%A4%91%ED%95%99%EA%B5%90&provCode=B10&neisCode=B100001367',
+  keywordParam:''
+};
 
 const UNITS = {
   all:{label:'조선 전체', full:'조선 전 시기'},
@@ -265,6 +281,7 @@ const UNITS = {
    level 입문·표준·도전 / len 짧음·보통·김 / u 단원
    q    (선택) 카카오에서 찾을 때 쓸 검색어. 없으면 t 사용
    vary (선택) true면 판본이 여러 종이라고 안내
+   lib  (선택) true 학교 도서관 소장 / false 미소장. 적지 않으면 표시하지 않음
    ========================================================= */
 const BOOKS = [
  {t:'박시백의 조선왕조실록', a:'박시백', p:'휴머니스트', genre:'만화', level:'입문', len:'보통', u:['all'],
@@ -390,7 +407,7 @@ function toBook(b){
   const k=keyOf(b), e=enrich[k]||null;
   return {
     title:b.t, author:b.a, pub:b.p, unit:b.u.map(u=>UNITS[u].full).join(', '),
-    note:b.note, genre:b.genre, level:b.level, len:b.len, vary:!!b.vary, src:'rec',
+    note:b.note, genre:b.genre, level:b.level, len:b.len, vary:!!b.vary, lib:b.lib, src:'rec',
     year: e&&e.year?e.year:'', isbn: e&&e.isbn?e.isbn:'',
     thumb: e&&e.thumbnail?e.thumbnail:'', contents: e?strip(e.contents||''):'',
     url: e&&e.url?e.url:'', kpub: e&&e.publisher?e.publisher:''
@@ -416,7 +433,9 @@ function actionRow(on){
 function cardRec(b){
   const o=toBook(b);
   const units=b.u.map(k=>`<span class="tag unit">${esc(UNITS[k].label)}</span>`).join('');
-  const tags=`<div class="tags"><span class="tag">${esc(b.genre)}</span><span class="tag">${esc(b.level)}</span><span class="tag">분량 ${esc(b.len)}</span>${units}</div>`;
+  const lib = b.lib===true ? '<span class="tag lib">도서관 소장</span>'
+            : b.lib===false ? '<span class="tag nolib">도서관 없음</span>' : '';
+  const tags=`<div class="tags"><span class="tag">${esc(b.genre)}</span><span class="tag">${esc(b.level)}</span><span class="tag">분량 ${esc(b.len)}</span>${units}${lib}</div>`;
   return cardShell(o, on=>{
     const body=`<h3>${esc(b.t)}</h3>
       <p class="meta">${esc(b.a)} · ${esc(b.p)}</p>${tags}
@@ -560,6 +579,22 @@ function openDialog(b){
   if(typeof dlg.showModal==='function') dlg.showModal(); else dlg.setAttribute('open','');
 }
 function closeDialog(){ if(dlg.open) dlg.close(); else dlg.removeAttribute('open'); }
+function libUrl(title){
+  if(!LIBRARY.keywordParam) return LIBRARY.base;
+  const sep = LIBRARY.base.indexOf('?')>=0 ? '&' : '?';
+  return LIBRARY.base + sep + LIBRARY.keywordParam + '=' + encodeURIComponent(title);
+}
+function openLibrary(title){
+  window.open(libUrl(title), '_blank', 'noopener');   // 먼저 열어야 차단되지 않습니다
+  if(LIBRARY.keywordParam) return;
+  navigator.clipboard.writeText(title)
+    .then(()=>toast('책 제목을 복사했습니다. 도서관 검색창에 붙여넣으세요.'))
+    .catch(()=>toast('도서관 검색창에 책 제목을 입력하세요.'));
+}
+$('#dLib').addEventListener('click', ()=>{ if(openBook) openLibrary(openBook.title); });
+$('#libBtn').addEventListener('click', ()=>{
+  const b=cands.find(x=>idOf(x)===finalId); if(b) openLibrary(b.title);
+});
 $('#dClose').addEventListener('click', closeDialog);
 $('#dPick').addEventListener('click', ()=>{ toggleCand(openBook); closeDialog(); });
 $('#dFinal').addEventListener('click', ()=>{ setFinal(openBook); closeDialog(); });
