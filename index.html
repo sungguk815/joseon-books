@@ -10,8 +10,16 @@
 <style>
 :root{
   --ink:#1B2430; --indigo:#2E4A7D; --seal:#A8392C;
-  --paper:#F3F2EC; --card:#FFFFFF; --muted:#6C7480; --line:#DEDCD2;
+  --paper:#F5F4EE; --card:#FFFFFF; --muted:#6C7480; --line:#DEDCD2;
   --radius:10px;
+  /* 단원·종류·난이도 색 (진한 색 / 옅은 바탕 / 글자색) */
+  --all:#4A5A6B; --all-b:#EDEEF0; --all-f:#42505F;
+  --u1:#2E4A7D;  --u1-b:#E6ECF6;  --u1-f:#2A4A85;
+  --u2:#5E4394;  --u2-b:#EFE9F7;  --u2-f:#573E8B;
+  --u3:#1B6B60;  --u3-b:#E2F1EE;  --u3-f:#186057;
+  --u4:#A93325;  --u4-b:#FAE8E5;  --u4-f:#9C2F22;
+  --u5:#9A5810;  --u5-b:#FBEEDD;  --u5-f:#8C500E;
+  --u6:#33683C;  --u6-b:#E6F1E6;  --u6-f:#2E5F36;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
@@ -22,7 +30,11 @@ body{margin:0;background:var(--paper);color:var(--ink);
   font-family:"IBM Plex Sans KR",system-ui,sans-serif;font-size:15px;line-height:1.65}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px 120px}
 
-header{padding:28px 0 18px;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;top:0;left:0;right:0;height:5px;z-index:40;
+  background:linear-gradient(90deg,var(--u1) 0 20%,var(--u3) 20% 40%,var(--u5) 40% 60%,var(--u4) 60% 80%,var(--u2) 80% 100%)}
+header{padding:30px 0 18px;position:relative}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,var(--u1),var(--u3),var(--u5),var(--u4))}
 header .who{margin:0 0 7px;font-size:12.5px;color:var(--indigo);font-weight:500}
 header h1{font-family:"Gowun Batang",serif;font-weight:700;font-size:26px;line-height:1.35;margin:0 0 6px;letter-spacing:-.01em}
 header p{margin:0;color:var(--muted);font-size:13.5px}
@@ -30,15 +42,16 @@ header p{margin:0;color:var(--muted);font-size:13.5px}
 nav{display:flex;gap:2px;margin:18px 0 16px;background:#E8E7DF;padding:3px;border-radius:var(--radius)}
 nav button{flex:1;border:0;background:transparent;padding:9px 4px;border-radius:8px;
   font-family:inherit;font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer}
-nav button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(27,36,48,.08)}
+nav button[aria-selected="true"]{background:var(--card);color:var(--indigo);font-weight:600;
+  box-shadow:0 1px 3px rgba(27,36,48,.12);border-bottom:2px solid var(--indigo)}
 nav button:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
 .badge{display:inline-block;min-width:17px;padding:0 5px;margin-left:4px;border-radius:999px;
   background:var(--indigo);color:#fff;font-size:11px;line-height:17px;vertical-align:1px}
 .badge[hidden]{display:none}
 
 .libbar{display:flex;align-items:center;gap:12px;text-decoration:none;
-  background:var(--card);border:1px solid var(--line);border-left:4px solid var(--indigo);
-  border-radius:var(--radius);padding:13px 15px;margin:0 0 16px;color:var(--ink)}
+  background:linear-gradient(100deg,#EDF2FA,#F4F0F8);border:1px solid #D6DEEC;
+  border-left:5px solid var(--u1);border-radius:var(--radius);padding:13px 15px;margin:0 0 16px;color:var(--ink)}
 .libbar:hover{border-color:#C9C6B8;border-left-color:var(--indigo)}
 .libbar .ic{width:26px;height:26px;flex:0 0 auto;color:var(--indigo)}
 .libbar .tx{flex:1;min-width:0}
@@ -49,7 +62,8 @@ nav button:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
 .search input{flex:1;min-width:0;padding:11px 13px;border:1px solid var(--line);border-radius:var(--radius);
   background:var(--card);font-family:inherit;font-size:15px;color:var(--ink)}
 .search input:focus{outline:2px solid var(--indigo);outline-offset:-1px;border-color:var(--indigo)}
-.search button{padding:11px 16px;border:0;border-radius:var(--radius);background:var(--indigo);color:#fff;
+.search button{padding:11px 16px;border:0;border-radius:var(--radius);
+  background:linear-gradient(140deg,var(--u1),#3E63A0);color:#fff;
   font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap}
 
 .chiprow{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:4px;-webkit-overflow-scrolling:touch}
@@ -57,6 +71,20 @@ nav button:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
 .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--muted);
   padding:6px 12px;border-radius:999px;font-family:inherit;font-size:13px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip.c-all[aria-pressed="true"]{background:var(--all);border-color:var(--all)}
+.chip.c-u1[aria-pressed="true"]{background:var(--u1);border-color:var(--u1)}
+.chip.c-u2[aria-pressed="true"]{background:var(--u2);border-color:var(--u2)}
+.chip.c-u3[aria-pressed="true"]{background:var(--u3);border-color:var(--u3)}
+.chip.c-u4[aria-pressed="true"]{background:var(--u4);border-color:var(--u4)}
+.chip.c-u5[aria-pressed="true"]{background:var(--u5);border-color:var(--u5)}
+.chip.c-u6[aria-pressed="true"]{background:var(--u6);border-color:var(--u6)}
+.chip.g1[aria-pressed="true"]{background:var(--u5);border-color:var(--u5)}
+.chip.g2[aria-pressed="true"]{background:var(--u1);border-color:var(--u1)}
+.chip.g3[aria-pressed="true"]{background:var(--u2);border-color:var(--u2)}
+.chip.g4[aria-pressed="true"]{background:var(--u3);border-color:var(--u3)}
+.chip.l1[aria-pressed="true"]{background:var(--u6);border-color:var(--u6)}
+.chip.l2[aria-pressed="true"]{background:var(--all);border-color:var(--all)}
+.chip.l3[aria-pressed="true"]{background:var(--u4);border-color:var(--u4)}
 .chip:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
 .filterlabel{font-size:12.5px;color:var(--muted);margin:6px 0 4px}
 
@@ -66,13 +94,28 @@ ul.list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
   padding:14px 15px;cursor:pointer}
 .book:hover{border-color:#C9C6B8}
 .book.cand{border-color:var(--indigo);background:#FAFBFD}
-.book.final{border-color:var(--seal);background:#FDFAF9}
+.book.final{border-color:var(--seal);background:#FDF7F5;box-shadow:0 1px 6px rgba(169,51,37,.12)}
+.book.cand{box-shadow:0 1px 5px rgba(46,74,125,.10)}
 .book h3{font-family:"Gowun Batang",serif;font-size:17.5px;font-weight:700;margin:0 0 4px;line-height:1.4;padding-right:50px}
 .meta{font-size:13px;color:var(--muted);margin:0 0 9px}
 .tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
-.tag{font-size:11.5px;padding:2px 8px;border-radius:4px;background:#EFEEE7;color:#555B64}
-.tag.unit{background:#E8EDF6;color:var(--indigo)}
-.tag.lib{background:#E7F1EA;color:#2F6B4A}
+.tag{font-size:11.5px;padding:2px 8px;border-radius:4px;background:#EFEEE7;color:#555B64;font-weight:500}
+.tag.unit{border-radius:999px;padding:2px 10px}
+.tag.c-all{background:var(--all-b);color:var(--all-f)}
+.tag.c-u1{background:var(--u1-b);color:var(--u1-f)}
+.tag.c-u2{background:var(--u2-b);color:var(--u2-f)}
+.tag.c-u3{background:var(--u3-b);color:var(--u3-f)}
+.tag.c-u4{background:var(--u4-b);color:var(--u4-f)}
+.tag.c-u5{background:var(--u5-b);color:var(--u5-f)}
+.tag.c-u6{background:var(--u6-b);color:var(--u6-f)}
+.tag.g1{background:var(--u5-b);color:var(--u5-f)}
+.tag.g2{background:var(--u1-b);color:var(--u1-f)}
+.tag.g3{background:var(--u2-b);color:var(--u2-f)}
+.tag.g4{background:var(--u3-b);color:var(--u3-f)}
+.tag.l1{background:var(--u6-b);color:var(--u6-f)}
+.tag.l2{background:var(--all-b);color:var(--all-f)}
+.tag.l3{background:var(--u4-b);color:var(--u4-f)}
+.tag.lib{background:var(--u6-b);color:var(--u6-f)}
 .tag.nolib{background:#F0EEEA;color:#8A8377}
 .note{font-size:13.5px;color:#454C56;margin:0 0 12px}
 .actions{display:flex;gap:7px;flex-wrap:wrap}
@@ -101,7 +144,9 @@ ul.list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .msg strong{color:var(--ink);font-weight:600}
 .warn{border-color:#E4C9A8;background:#FBF4E9;color:#7A5A2E}
 
-.slip{background:var(--card);border:1px solid var(--seal);border-radius:var(--radius);padding:18px;margin-bottom:18px}
+.slip{background:linear-gradient(160deg,#FDF7F5,var(--card) 55%);border:1px solid var(--seal);
+  border-radius:var(--radius);padding:18px;margin-bottom:18px;box-shadow:0 2px 10px rgba(169,51,37,.10)}
+.slip h2{color:var(--seal)}
 .slip h2{font-family:"Gowun Batang",serif;font-size:19px;margin:0 0 4px;font-weight:700}
 .slip .lead{font-size:12.5px;color:var(--muted);margin:0 0 14px}
 .slip dl{margin:0;display:grid;grid-template-columns:72px 1fr;gap:9px 10px;font-size:14px}
@@ -110,7 +155,7 @@ ul.list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .slipactions{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
 .btn{padding:10px 16px;border-radius:8px;font-family:inherit;font-size:13.5px;font-weight:500;cursor:pointer;
   border:1px solid var(--line);background:var(--card);color:var(--ink)}
-.btn.primary{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.btn.primary{background:linear-gradient(140deg,var(--u1),#3E63A0);border-color:var(--u1);color:#fff}
 .btn.quiet{color:var(--muted)}
 .btn:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
 
@@ -137,7 +182,7 @@ dialog::backdrop{background:rgba(27,36,48,.45)}
 .dlghead .t{flex:1;min-width:0}
 .dlghead h3{font-family:"Gowun Batang",serif;font-size:20px;font-weight:700;margin:0 0 6px;line-height:1.35}
 .dlghead p{margin:0;font-size:13px;color:var(--muted)}
-.teacher{background:#F5F7FA;border-left:3px solid var(--indigo);padding:11px 13px;border-radius:0 6px 6px 0;
+.teacher{background:linear-gradient(100deg,#EDF2FA,#F7F4FB);border-left:4px solid var(--u1);padding:11px 13px;border-radius:0 6px 6px 0;
   font-size:13.5px;color:#3D444E;margin:0 0 14px}
 .introlabel{font-size:12.5px;color:var(--muted);margin:0 0 5px}
 .intro{font-size:14px;color:#3D444E;margin:0 0 14px;line-height:1.72}
@@ -145,7 +190,8 @@ dialog::backdrop{background:rgba(27,36,48,.45)}
   border-top:1px solid var(--line);padding-top:14px}
 .dlgbody dt{color:var(--muted);font-size:12.5px}
 .dlgbody dd{margin:0;word-break:break-all}
-.caution{font-size:12.5px;color:#7A5A2E;background:#FBF4E9;border-radius:6px;padding:9px 11px;margin:0 0 12px}
+.caution{font-size:12.5px;color:var(--u5-f);background:var(--u5-b);border-left:4px solid var(--u5);
+  border-radius:0 6px 6px 0;padding:9px 12px;margin:0 0 12px}
 .dlglink{font-size:13px;color:var(--indigo)}
 .credit{font-size:11.5px;color:var(--muted);margin:10px 0 0}
 .dlgfoot{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
@@ -396,11 +442,12 @@ TABS.forEach(([t,p])=>{
 
 /* ===== 필터 ===== */
 let fUnit='all', fGenre='', fLevel='';
-const chip=(v,on)=>`<button class="chip" aria-pressed="${on}" data-v="${esc(v)}">${esc(v)}</button>`;
+const TAGC={'만화':'g1','교양':'g2','소설':'g3','고전':'g4','입문':'l1','표준':'l2','도전':'l3'};
+const chip=(v,on)=>`<button class="chip ${TAGC[v]||''}" aria-pressed="${on}" data-v="${esc(v)}">${esc(v)}</button>`;
 function buildChips(){
   const u=$('#unitChips');
   u.innerHTML=['all','u1','u2','u3','u4','u5','u6']
-    .map(k=>`<button class="chip" aria-pressed="${k===fUnit}" data-u="${k}">${esc(k==='all'?'전체':UNITS[k].label)}</button>`).join('');
+    .map(k=>`<button class="chip c-${k}" aria-pressed="${k===fUnit}" data-u="${k}">${esc(k==='all'?'전체':UNITS[k].label)}</button>`).join('');
   u.addEventListener('click',e=>{
     const b=e.target.closest('[data-u]'); if(!b) return;
     fUnit=b.dataset.u; u.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c===b)); renderRec();
@@ -452,10 +499,12 @@ function actionRow(on){
 }
 function cardRec(b){
   const o=toBook(b);
-  const units=b.u.map(k=>`<span class="tag unit">${esc(UNITS[k].label)}</span>`).join('');
+  const units=b.u.map(k=>`<span class="tag unit c-${k}">${esc(UNITS[k].label)}</span>`).join('');
   const lib = b.lib===true ? '<span class="tag lib">도서관 소장</span>'
             : b.lib===false ? '<span class="tag nolib">도서관 없음</span>' : '';
-  const tags=`<div class="tags"><span class="tag">${esc(b.genre)}</span><span class="tag">${esc(b.level)}</span><span class="tag">분량 ${esc(b.len)}</span>${units}${lib}</div>`;
+  const tags=`<div class="tags"><span class="tag ${TAGC[b.genre]||''}">${esc(b.genre)}</span>`
+    + `<span class="tag ${TAGC[b.level]||''}">${esc(b.level)}</span>`
+    + `<span class="tag">분량 ${esc(b.len)}</span>${units}${lib}</div>`;
   return cardShell(o, on=>{
     const body=`<h3>${esc(b.t)}</h3>
       <p class="meta">${esc(b.a)} · ${esc(b.p)}</p>${tags}
