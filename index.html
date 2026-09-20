@@ -36,6 +36,15 @@ nav button:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
   background:var(--indigo);color:#fff;font-size:11px;line-height:17px;vertical-align:1px}
 .badge[hidden]{display:none}
 
+.libbar{display:flex;align-items:center;gap:12px;text-decoration:none;
+  background:var(--card);border:1px solid var(--line);border-left:4px solid var(--indigo);
+  border-radius:var(--radius);padding:13px 15px;margin:0 0 16px;color:var(--ink)}
+.libbar:hover{border-color:#C9C6B8;border-left-color:var(--indigo)}
+.libbar .ic{width:26px;height:26px;flex:0 0 auto;color:var(--indigo)}
+.libbar .tx{flex:1;min-width:0}
+.libbar b{display:block;font-size:14.5px;font-weight:600;line-height:1.4}
+.libbar small{display:block;font-size:12px;color:var(--muted);margin-top:1px}
+.libbar:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
 .search{display:flex;gap:8px;margin-bottom:12px}
 .search input{flex:1;min-width:0;padding:11px 13px;border:1px solid var(--line);border-radius:var(--radius);
   background:var(--card);font-family:inherit;font-size:15px;color:var(--ink)}
@@ -164,6 +173,17 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
   <button role="tab" id="tab-find" aria-controls="panel-find" aria-selected="false">직접 찾기</button>
   <button role="tab" id="tab-my" aria-controls="panel-my" aria-selected="false">담은 책<span class="badge" id="candBadge" hidden></span></button>
 </nav>
+
+<a class="libbar" id="libTop" href="#" target="_blank" rel="noopener">
+  <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+    <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H10a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H5.5A1.5 1.5 0 0 1 4 15.5z"/>
+    <path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H14a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h4.5a1.5 1.5 0 0 0 1.5-1.5z"/>
+  </svg>
+  <span class="tx">
+    <b>우리 학교 도서관에서 도서 찾기</b>
+    <small>독서로 학교도서관 검색 · 새 창에서 열립니다</small>
+  </span>
+</a>
 
 <section id="panel-rec" role="tabpanel" aria-labelledby="tab-rec">
   <div class="search"><input id="recQ" type="search" placeholder="제목이나 저자로 걸러보기" autocomplete="off"></div>
@@ -661,6 +681,8 @@ function refreshAll(){
 $('#recQ').addEventListener('input', renderRec);
 $('#findBtn').addEventListener('click', runSearch);
 $('#findQ').addEventListener('keydown', e=>{ if(e.key==='Enter') runSearch(); });
+
+$('#libTop').href = LIBRARY.base;
 
 load(); buildChips(); refreshAll(); enrichBooks();
 </script>
