@@ -33,7 +33,7 @@ nav button[aria-selected="true"]{background:var(--card);color:var(--ink);box-sha
 nav button:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
 .badge{display:inline-block;min-width:17px;padding:0 5px;margin-left:4px;border-radius:999px;
   background:var(--indigo);color:#fff;font-size:11px;line-height:17px;vertical-align:1px}
-.badge:empty,.badge[hidden]{display:none}
+.badge[hidden]{display:none}
 
 .search{display:flex;gap:8px;margin-bottom:12px}
 .search input{flex:1;min-width:0;padding:11px 13px;border:1px solid var(--line);border-radius:var(--radius);
@@ -57,7 +57,7 @@ ul.list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .book:hover{border-color:#C9C6B8}
 .book.cand{border-color:var(--indigo);background:#FAFBFD}
 .book.final{border-color:var(--seal);background:#FDFAF9}
-.book h3{font-family:"Gowun Batang",serif;font-size:17.5px;font-weight:700;margin:0 0 4px;line-height:1.4;padding-right:54px}
+.book h3{font-family:"Gowun Batang",serif;font-size:17.5px;font-weight:700;margin:0 0 4px;line-height:1.4;padding-right:50px}
 .meta{font-size:13px;color:var(--muted);margin:0 0 9px}
 .tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
 .tag{font-size:11.5px;padding:2px 8px;border-radius:4px;background:#EFEEE7;color:#555B64}
@@ -71,16 +71,19 @@ ul.list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .more{border:1px solid var(--line);background:transparent;color:var(--muted);padding:7px 12px;border-radius:8px;
   font-family:inherit;font-size:13.5px;cursor:pointer}
 
-.seal{position:absolute;top:12px;right:13px;width:42px;height:42px;border-radius:50%;
+.seal{position:absolute;top:12px;right:13px;width:40px;height:40px;border-radius:50%;
   border:2px solid var(--seal);color:var(--seal);display:none;align-items:center;justify-content:center;
-  font-family:"Gowun Batang",serif;font-size:15px;font-weight:700;letter-spacing:-1px;transform:rotate(-8deg);opacity:.9}
+  font-family:"Gowun Batang",serif;font-size:14px;font-weight:700;letter-spacing:-1px;transform:rotate(-8deg);
+  opacity:.92;background:rgba(255,255,255,.85)}
 .book.final .seal{display:flex;animation:stamp .28s cubic-bezier(.2,1.4,.5,1)}
-@keyframes stamp{from{transform:rotate(-8deg) scale(1.9);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:.9}}
+@keyframes stamp{from{transform:rotate(-8deg) scale(1.9);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:.92}}
 @media (prefers-reduced-motion:reduce){.book.final .seal{animation:none}}
 
-.hit{display:flex;gap:12px}
-.hit img{width:58px;height:82px;object-fit:cover;border-radius:4px;background:#EFEEE7;flex:0 0 auto}
+.hit{display:flex;gap:13px}
+.cover{width:62px;height:88px;object-fit:cover;border-radius:4px;background:#EFEEE7;flex:0 0 auto;
+  box-shadow:0 1px 3px rgba(27,36,48,.14)}
 .hit .body{flex:1;min-width:0}
+.hit h3{padding-right:44px}
 
 .msg{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;color:var(--muted);font-size:13.5px}
 .msg strong{color:var(--ink);font-weight:600}
@@ -100,38 +103,40 @@ ul.list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .btn:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
 
 .section-title{font-size:13px;color:var(--muted);margin:22px 0 8px}
-.cand{position:relative}
 ul.cands{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.candrow{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;
-  display:flex;gap:10px;align-items:flex-start}
+.candrow{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:11px 13px;
+  display:flex;gap:11px;align-items:center}
+.candrow .cover{width:40px;height:57px}
 .candrow .t{flex:1;min-width:0}
 .candrow h4{font-family:"Gowun Batang",serif;font-size:16px;font-weight:700;margin:0 0 2px;line-height:1.4}
 .candrow p{margin:0;font-size:12.5px;color:var(--muted)}
-.candrow .ops{display:flex;gap:6px;flex:0 0 auto}
-.mini{border:1px solid var(--line);background:transparent;color:var(--ink);padding:6px 10px;border-radius:7px;
+.candrow .ops{display:flex;flex-direction:column;gap:5px;flex:0 0 auto}
+.mini{border:1px solid var(--line);background:transparent;color:var(--ink);padding:5px 10px;border-radius:7px;
   font-family:inherit;font-size:12.5px;cursor:pointer;white-space:nowrap}
-.mini.seal{position:static;width:auto;height:auto;border-radius:7px;transform:none;opacity:1;
-  border:1px solid var(--seal);color:var(--seal);display:block;font-family:inherit;font-size:12.5px;font-weight:400;letter-spacing:0}
+.mini.go{border-color:var(--seal);color:var(--seal)}
 .mini.del{color:var(--muted)}
 
 dialog{border:0;padding:0;border-radius:14px;max-width:560px;width:calc(100% - 28px);
   background:var(--card);color:var(--ink);box-shadow:0 12px 40px rgba(27,36,48,.22)}
 dialog::backdrop{background:rgba(27,36,48,.45)}
 .dlg{padding:20px;max-height:82vh;overflow:auto}
-.dlghead{display:flex;gap:14px;margin-bottom:14px}
-.dlghead img{width:84px;height:120px;object-fit:cover;border-radius:5px;background:#EFEEE7;flex:0 0 auto}
+.dlghead{display:flex;gap:15px;margin-bottom:15px}
+.dlghead .cover{width:92px;height:131px}
 .dlghead .t{flex:1;min-width:0}
 .dlghead h3{font-family:"Gowun Batang",serif;font-size:20px;font-weight:700;margin:0 0 6px;line-height:1.35}
 .dlghead p{margin:0;font-size:13px;color:var(--muted)}
-.dlgbody dl{margin:0 0 14px;display:grid;grid-template-columns:70px 1fr;gap:7px 10px;font-size:13.5px;
+.teacher{background:#F5F7FA;border-left:3px solid var(--indigo);padding:11px 13px;border-radius:0 6px 6px 0;
+  font-size:13.5px;color:#3D444E;margin:0 0 14px}
+.introlabel{font-size:12.5px;color:var(--muted);margin:0 0 5px}
+.intro{font-size:14px;color:#3D444E;margin:0 0 14px;line-height:1.72}
+.dlgbody dl{margin:0 0 12px;display:grid;grid-template-columns:76px 1fr;gap:7px 10px;font-size:13.5px;
   border-top:1px solid var(--line);padding-top:14px}
 .dlgbody dt{color:var(--muted);font-size:12.5px}
 .dlgbody dd{margin:0;word-break:break-all}
-.dlgbody .intro{font-size:14px;color:#3D444E;margin:0 0 14px;line-height:1.72}
-.dlgbody .teacher{background:#F5F7FA;border-left:3px solid var(--indigo);padding:11px 13px;border-radius:0 6px 6px 0;
-  font-size:13.5px;color:#3D444E;margin:0 0 14px}
+.caution{font-size:12.5px;color:#7A5A2E;background:#FBF4E9;border-radius:6px;padding:9px 11px;margin:0 0 12px}
 .dlglink{font-size:13px;color:var(--indigo)}
-.dlgfoot{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px}
+.credit{font-size:11.5px;color:var(--muted);margin:10px 0 0}
+.dlgfoot{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
 
 #toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
   background:var(--ink);color:#fff;padding:11px 18px;border-radius:999px;font-size:13.5px;
@@ -205,14 +210,14 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
 
 <footer>
   쪽수와 도서관 소장 여부는 학교 도서관에서 확인하세요.<br>
-  도서 정보 검색 © Kakao
+  표지와 책 소개 © Kakao
 </footer>
 </div>
 
 <dialog id="dlg">
   <div class="dlg">
     <div class="dlghead">
-      <img id="dThumb" alt="">
+      <img id="dThumb" class="cover" alt="">
       <div class="t">
         <h3 id="dTitle"></h3>
         <p id="dWho"></p>
@@ -220,9 +225,14 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
     </div>
     <div class="dlgbody">
       <div id="dTeacher" class="teacher" hidden></div>
-      <p id="dIntro" class="intro" hidden></p>
+      <div id="dIntroWrap" hidden>
+        <p class="introlabel">책 소개</p>
+        <p id="dIntro" class="intro"></p>
+      </div>
+      <p id="dCaution" class="caution" hidden></p>
       <dl id="dFacts"></dl>
       <p id="dLinkWrap" hidden><a id="dLink" class="dlglink" href="#" target="_blank" rel="noopener">책 정보 더 보기</a></p>
+      <p class="credit">표지·소개·ISBN은 카카오 책 정보에서 가져왔습니다.</p>
     </div>
     <div class="dlgfoot">
       <button class="btn primary" id="dPick">이 책 담기</button>
@@ -236,7 +246,7 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
 
 <script>
 /* ===== Apps Script 웹앱 주소 ===== */
-const PROXY_URL = 'https://script.google.com/macros/s/AKfycbxQ_y3eFVav19Gu0okmBJFhxQKKuH6cxWxf0NyHiNdctVekWVRCjwTPbPvk7thUUJkZ/exec'; // 예: 'https://script.google.com/macros/s/AKfycb.../exec'
+const PROXY_URL = 'https://script.google.com/macros/s/AKfycbxQ_y3eFVav19Gu0okmBJFhxQKKuH6cxWxf0NyHiNdctVekWVRCjwTPbPvk7thUUJkZ/exec';
 
 const UNITS = {
   all:{label:'조선 전체', full:'조선 전 시기'},
@@ -248,35 +258,43 @@ const UNITS = {
   u6:{label:'향촌·농민', full:'5-2 향촌 변화와 농민 봉기'}
 };
 
-/* ===== 추천 도서 목록 (자유롭게 수정) ===== */
+/* ===== 추천 도서 목록 =====================================
+   t 서명 / a 저자 / p 출판사 / genre 만화·교양·소설·고전
+   level 입문·표준·도전 / len 짧음·보통·김 / u 단원
+   q    (선택) 카카오에서 찾을 때 쓸 검색어. 없으면 t 사용
+   vary (선택) true면 판본이 여러 종이라고 안내
+   ========================================================= */
 const BOOKS = [
  {t:'박시백의 조선왕조실록', a:'박시백', p:'휴머니스트', genre:'만화', level:'입문', len:'보통', u:['all'],
   note:'20권짜리지만 한 권씩 따로 읽어도 됩니다. 실록을 그대로 옮긴 만화라 교과서와 맞춰보기 좋습니다.'},
  {t:'조선왕조실톡', a:'무적핑크', p:'이마', genre:'만화', level:'입문', len:'짧음', u:['all'],
   note:'실록 속 사건을 메신저 대화처럼 풀어낸 웹툰입니다. 부담 없이 시작하기 좋습니다.'},
  {t:'용선생의 시끌벅적 한국사 (조선 편)', a:'금현진 외', p:'사회평론', genre:'교양', level:'입문', len:'보통', u:['all'],
+  q:'용선생의 시끌벅적 한국사',
   note:'그림과 사진이 많아 술술 읽힙니다. 조선을 다룬 권만 골라 읽으세요.'},
  {t:'한국사 편지 3·4', a:'박은봉', p:'책과함께', genre:'교양', level:'입문', len:'보통', u:['all'],
+  q:'한국사 편지',
   note:'편지글이라 문장이 쉽습니다. 3권이 조선 전기, 4권이 조선 후기입니다.'},
  {t:'설민석의 조선왕조실록', a:'설민석', p:'세계사', genre:'교양', level:'표준', len:'김', u:['all'],
   note:'왕 한 명씩 차례로 짚어갑니다. 궁금한 왕부터 펼쳐 읽어도 됩니다.'},
  {t:'역사저널 그날: 조선 편', a:'KBS 역사저널 그날 제작팀', p:'민음사', genre:'교양', level:'표준', len:'보통', u:['all'],
+  q:'역사저널 그날',
   note:'한 사건을 두고 여러 사람이 토론하듯 풀어갑니다. 같은 사건을 다르게 보는 눈을 얻을 수 있습니다.'},
  {t:'사화와 반정의 시대', a:'김범', p:'역사비평사', genre:'교양', level:'도전', len:'김', u:['u2'],
   note:'사화가 왜 네 번이나 일어났는지 제대로 파고듭니다. 어렵지만 붕당까지 이해하고 싶다면 권합니다.'},
  {t:'초정리 편지', a:'배유안', p:'창비', genre:'소설', level:'입문', len:'짧음', u:['u3'],
   note:'훈민정음을 배우는 아이의 이야기입니다. 세종이 왜 한글을 만들었는지 사람 쪽에서 보게 됩니다.'},
- {t:'난중일기', a:'이순신', p:'판본 여러 종', genre:'고전', level:'표준', len:'보통', u:['u4'],
+ {t:'난중일기', a:'이순신', p:'판본 여러 종', genre:'고전', level:'표준', len:'보통', u:['u4'], vary:true,
   note:'이순신이 직접 쓴 일기입니다. 청소년용으로 옮긴 판본을 고르세요.'},
- {t:'징비록', a:'유성룡', p:'판본 여러 종', genre:'고전', level:'도전', len:'보통', u:['u4'],
+ {t:'징비록', a:'유성룡', p:'판본 여러 종', genre:'고전', level:'도전', len:'보통', u:['u4'], vary:true,
   note:'임진왜란을 겪은 재상이 "다시는 이러지 말자"며 남긴 기록입니다.'},
  {t:'칼의 노래', a:'김훈', p:'문학동네', genre:'소설', level:'도전', len:'보통', u:['u4'],
   note:'이순신의 목소리로 쓰인 소설입니다. 문장이 짧고 강합니다.'},
  {t:'남한산성', a:'김훈', p:'학고재', genre:'소설', level:'도전', len:'보통', u:['u4'],
   note:'병자호란 때 성 안에서 벌어진 47일간의 논쟁을 다룹니다.'},
- {t:'박씨전', a:'작자 미상', p:'판본 여러 종', genre:'고전', level:'표준', len:'짧음', u:['u4'],
+ {t:'박씨전', a:'작자 미상', p:'판본 여러 종', genre:'고전', level:'표준', len:'짧음', u:['u4'], vary:true,
   note:'병자호란 뒤에 지어진 옛소설입니다. 진 전쟁을 왜 이렇게 썼을지 생각해 볼 만합니다.'},
- {t:'하멜표류기', a:'헨드릭 하멜', p:'판본 여러 종', genre:'고전', level:'표준', len:'짧음', u:['u5'],
+ {t:'하멜표류기', a:'헨드릭 하멜', p:'판본 여러 종', genre:'고전', level:'표준', len:'짧음', u:['u5'], vary:true,
   note:'조선에 13년간 붙잡혀 있던 네덜란드인의 기록입니다. 바깥에서 본 조선이 담겨 있습니다.'},
  {t:'사도세자의 고백', a:'이덕일', p:'휴머니스트', genre:'교양', level:'표준', len:'보통', u:['u5'],
   note:'아버지 영조가 왜 아들을 죽였는지, 당쟁과 엮어 설명합니다.'},
@@ -284,15 +302,16 @@ const BOOKS = [
   note:'서얼이라 벼슬길이 막힌 이덕무와 친구들의 이야기입니다. 신분제가 무엇이었는지 와닿습니다.'},
  {t:'조선에서 백수로 살기', a:'고미숙', p:'프런티어', genre:'교양', level:'표준', len:'보통', u:['u5'],
   note:'연암 박지원을 요즘 말투로 풀어냈습니다. 실학이 딱딱하게 느껴졌다면 이 책부터.'},
- {t:'세계 최고의 여행기 열하일기', a:'고미숙 옮김', p:'북드라망', genre:'교양', level:'도전', len:'김', u:['u5'],
+ {t:'세계 최고의 여행기 열하일기', a:'고미숙', p:'북드라망', genre:'교양', level:'도전', len:'김', u:['u5'],
+  q:'열하일기 고미숙',
   note:'박지원이 청나라를 다녀오며 쓴 여행기입니다. 조선 밖을 본 사람의 눈이 담겨 있습니다.'},
  {t:'조선의 뒷골목 풍경', a:'강명관', p:'푸른역사', genre:'교양', level:'표준', len:'보통', u:['u6'],
   note:'왕과 신하 말고 저잣거리 사람들 이야기입니다. 교과서에 안 나오는 조선이 나옵니다.'},
  {t:'책과 노니는 집', a:'이영서', p:'문학동네', genre:'소설', level:'입문', len:'짧음', u:['u6'],
   note:'책 심부름을 하던 소년의 눈으로 조선 후기를 봅니다. 짧고 잘 읽힙니다.'},
- {t:'홍길동전', a:'허균', p:'판본 여러 종', genre:'고전', level:'입문', len:'짧음', u:['u6'],
+ {t:'홍길동전', a:'허균', p:'판본 여러 종', genre:'고전', level:'입문', len:'짧음', u:['u6'], vary:true,
   note:'서얼 차별과 신분제를 정면으로 다룬 옛소설입니다. 지은이 허균의 삶도 함께 찾아보세요.'},
- {t:'목민심서', a:'정약용', p:'판본 여러 종', genre:'고전', level:'도전', len:'보통', u:['u6'],
+ {t:'목민심서', a:'정약용', p:'판본 여러 종', genre:'고전', level:'도전', len:'보통', u:['u6'], vary:true,
   note:'수령이 지켜야 할 것을 적은 책입니다. 뒤집어 읽으면 당시 관리들이 어땠는지 보입니다. 청소년용 편역본을 고르세요.'}
 ];
 
@@ -303,25 +322,28 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const strip = s => String(s==null?'':s).replace(/<[^>]*>/g,'');
 const idOf = b => (b.title||'') + '|' + (b.author||'');
+const keyOf = b => b.t + '|' + b.a;
 
-let cands = [];      // 담은 책들
-let finalId = null;  // 읽기로 정한 책
-let openBook = null; // 팝업에 띄운 책
-const KEY = 'joseon-books-v2';
+let cands=[], finalId=null, openBook=null, lastHits=[];
+let enrich={};                       // 카카오에서 가져온 추천 도서 정보
+const KEY='joseon-books-v2';
+const EKEY='joseon-enrich-v1';
+const ETTL=14*24*60*60*1000;         // 기기에 14일 보관
 
 function toast(m){
-  const el = $('#toast'); el.textContent = m; el.classList.add('on');
-  clearTimeout(el._t); el._t = setTimeout(()=>el.classList.remove('on'), 2000);
+  const el=$('#toast'); el.textContent=m; el.classList.add('on');
+  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('on'),2000);
 }
-function save(){
-  try{ localStorage.setItem(KEY, JSON.stringify({cands, finalId})); }catch(e){}
-}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify({cands,finalId})); }catch(e){} }
 function load(){
+  try{ const r=localStorage.getItem(KEY); if(r){ const o=JSON.parse(r); cands=o.cands||[]; finalId=o.finalId||null; } }
+  catch(e){ cands=[]; finalId=null; }
   try{
-    const raw = localStorage.getItem(KEY);
-    if(raw){ const o = JSON.parse(raw); cands = o.cands||[]; finalId = o.finalId||null; }
-  }catch(e){ cands=[]; finalId=null; }
+    const r=localStorage.getItem(EKEY);
+    if(r){ const o=JSON.parse(r); if(Date.now()-(o.ts||0)<ETTL) enrich=o.map||{}; }
+  }catch(e){ enrich={}; }
 }
+function saveEnrich(){ try{ localStorage.setItem(EKEY, JSON.stringify({ts:Date.now(), map:enrich})); }catch(e){} }
 const inCands = id => cands.some(b=>idOf(b)===id);
 
 /* ===== 탭 ===== */
@@ -336,28 +358,23 @@ TABS.forEach(([t,p])=>{
 /* ===== 필터 ===== */
 let fUnit='all', fGenre='', fLevel='';
 const chip=(v,on)=>`<button class="chip" aria-pressed="${on}" data-v="${esc(v)}">${esc(v)}</button>`;
-
 function buildChips(){
   const u=$('#unitChips');
   u.innerHTML=['all','u1','u2','u3','u4','u5','u6']
     .map(k=>`<button class="chip" aria-pressed="${k===fUnit}" data-u="${k}">${esc(k==='all'?'전체':UNITS[k].label)}</button>`).join('');
   u.addEventListener('click',e=>{
     const b=e.target.closest('[data-u]'); if(!b) return;
-    fUnit=b.dataset.u;
-    u.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c===b));
-    renderRec();
+    fUnit=b.dataset.u; u.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c===b)); renderRec();
   });
-
   const k=$('#kindChips');
   k.innerHTML=['만화','교양','소설','고전'].map(v=>chip(v,false)).join('')+['입문','표준','도전'].map(v=>chip(v,false)).join('');
   k.addEventListener('click',e=>{
     const b=e.target.closest('[data-v]'); if(!b) return;
     const v=b.dataset.v, on=b.getAttribute('aria-pressed')==='true';
-    if(['입문','표준','도전'].includes(v)) fLevel = on?'':v; else fGenre = on?'':v;
-    k.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed', c.dataset.v===fGenre || c.dataset.v===fLevel));
+    if(['입문','표준','도전'].includes(v)) fLevel=on?'':v; else fGenre=on?'':v;
+    k.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed', c.dataset.v===fGenre||c.dataset.v===fLevel));
     renderRec();
   });
-
   const s=$('#seedChips');
   s.innerHTML=SEEDS.map(v=>chip(v,false)).join('');
   s.addEventListener('click',e=>{
@@ -366,70 +383,94 @@ function buildChips(){
   });
 }
 
-/* ===== 카드 ===== */
-function toBook(b){ // 추천 도서 -> 공통 형식
-  return {title:b.t, author:b.a, pub:b.p, year:'', isbn:'', thumb:'',
-    unit:b.u.map(k=>UNITS[k].full).join(', '), note:b.note, contents:'', url:'',
-    genre:b.genre, level:b.level, len:b.len, src:'rec'};
+/* ===== 공통 책 객체 ===== */
+function toBook(b){
+  const k=keyOf(b), e=enrich[k]||null;
+  return {
+    title:b.t, author:b.a, pub:b.p, unit:b.u.map(u=>UNITS[u].full).join(', '),
+    note:b.note, genre:b.genre, level:b.level, len:b.len, vary:!!b.vary, src:'rec',
+    year: e&&e.year?e.year:'', isbn: e&&e.isbn?e.isbn:'',
+    thumb: e&&e.thumbnail?e.thumbnail:'', contents: e?strip(e.contents||''):'',
+    url: e&&e.url?e.url:'', kpub: e&&e.publisher?e.publisher:''
+  };
 }
 function toHit(d){
   return {title:strip(d.title), author:(d.authors||[]).join(', '), pub:d.publisher||'', year:d.year||'',
-    isbn:d.isbn||'', thumb:d.thumbnail||'', unit:'', note:'', contents:strip(d.contents||''), url:d.url||'',
-    trans:(d.translators||[]).join(', '), status:d.status||'', src:'find'};
+    isbn:d.isbn||'', thumb:d.thumbnail||'', unit:'', note:'', contents:strip(d.contents||''),
+    url:d.url||'', trans:(d.translators||[]).join(', '), src:'find'};
 }
 
+/* ===== 카드 ===== */
+function cardShell(o, inner){
+  const id=idOf(o), on=inCands(id), fin=finalId===id;
+  return `<li class="book ${on?'cand':''} ${fin?'final':''}" data-book="${esc(JSON.stringify(o))}">
+    <div class="seal">선택</div>${inner(on)}</li>`;
+}
+function actionRow(on){
+  return `<div class="actions">
+    <button class="pick ${on?'on':''}" data-toggle>${on?'담음 ✓':'담기'}</button>
+    <button class="more" data-more>자세히</button></div>`;
+}
 function cardRec(b){
-  const o=toBook(b), id=idOf(o), on=inCands(id), fin=finalId===id;
+  const o=toBook(b);
   const units=b.u.map(k=>`<span class="tag unit">${esc(UNITS[k].label)}</span>`).join('');
-  return `<li class="book ${on?'cand':''} ${fin?'final':''}" data-book="${esc(JSON.stringify(o))}">
-    <div class="seal">선택</div>
-    <h3>${esc(b.t)}</h3>
-    <p class="meta">${esc(b.a)} · ${esc(b.p)}</p>
-    <div class="tags"><span class="tag">${esc(b.genre)}</span><span class="tag">${esc(b.level)}</span><span class="tag">분량 ${esc(b.len)}</span>${units}</div>
-    <p class="note">${esc(b.note)}</p>
-    <div class="actions">
-      <button class="pick ${on?'on':''}" data-toggle>${on?'담음 ✓':'담기'}</button>
-      <button class="more" data-more>자세히</button>
-    </div>
-  </li>`;
+  const tags=`<div class="tags"><span class="tag">${esc(b.genre)}</span><span class="tag">${esc(b.level)}</span><span class="tag">분량 ${esc(b.len)}</span>${units}</div>`;
+  return cardShell(o, on=>{
+    const body=`<h3>${esc(b.t)}</h3>
+      <p class="meta">${esc(b.a)} · ${esc(b.p)}</p>${tags}
+      <p class="note">${esc(b.note)}</p>${actionRow(on)}`;
+    return o.thumb
+      ? `<div class="hit"><img class="cover" src="${esc(o.thumb)}" alt="" loading="lazy"><div class="body">${body}</div></div>`
+      : body;
+  });
 }
-
 function cardHit(d){
-  const o=toHit(d), id=idOf(o), on=inCands(id), fin=finalId===id;
+  const o=toHit(d);
   const who=[o.author,o.pub,o.year].filter(Boolean).join(' · ');
-  const thumb=o.thumb?`<img src="${esc(o.thumb)}" alt="" loading="lazy">`:'<img alt="">';
-  return `<li class="book ${on?'cand':''} ${fin?'final':''}" data-book="${esc(JSON.stringify(o))}">
-    <div class="seal">선택</div>
-    <div class="hit">${thumb}
-      <div class="body">
-        <h3>${esc(o.title)}</h3>
-        <p class="meta">${esc(who)}</p>
-        ${o.contents?`<p class="note">${esc(o.contents.slice(0,110))}…</p>`:''}
-        <div class="actions">
-          <button class="pick ${on?'on':''}" data-toggle>${on?'담음 ✓':'담기'}</button>
-          <button class="more" data-more>자세히</button>
-        </div>
-      </div>
-    </div>
-  </li>`;
+  return cardShell(o, on=>`<div class="hit">
+    ${o.thumb?`<img class="cover" src="${esc(o.thumb)}" alt="" loading="lazy">`:'<img class="cover" alt="">'}
+    <div class="body">
+      <h3>${esc(o.title)}</h3>
+      <p class="meta">${esc(who)}</p>
+      ${o.contents?`<p class="note">${esc(o.contents.slice(0,105))}…</p>`:''}
+      ${actionRow(on)}
+    </div></div>`);
 }
 
-function renderRec(){
+function visibleBooks(){
   const q=$('#recQ').value.trim().toLowerCase();
-  const rows=BOOKS.filter(b=>{
+  return BOOKS.filter(b=>{
     if(fUnit!=='all' && !b.u.includes(fUnit) && !b.u.includes('all')) return false;
     if(fGenre && b.genre!==fGenre) return false;
     if(fLevel && b.level!==fLevel) return false;
     if(q && !(b.t+b.a+b.p).toLowerCase().includes(q)) return false;
     return true;
   });
+}
+function renderRec(){
+  const rows=visibleBooks();
   $('#recCount').textContent = rows.length?`${rows.length}권`:'';
   $('#recList').innerHTML = rows.length ? rows.map(cardRec).join('')
     : '<li class="msg">조건에 맞는 책이 없습니다. 칩을 하나 풀어보세요.</li>';
 }
 
+/* ===== 추천 도서 표지·소개 불러오기 ===== */
+async function enrichBooks(){
+  if(!PROXY_URL) return;
+  const todo=BOOKS.filter(b=>!(keyOf(b) in enrich));
+  if(!todo.length) return;
+  for(let i=0;i<todo.length;i+=6){
+    const chunk=todo.slice(i,i+6).map(b=>({k:keyOf(b), q:b.q||b.t, a:b.a}));
+    try{
+      const res=await fetch(`${PROXY_URL}?mode=batch&qs=${encodeURIComponent(JSON.stringify(chunk))}`);
+      const data=await res.json();
+      if(data.ok && data.map){ Object.assign(enrich, data.map); saveEnrich(); refreshAll(); }
+      else break;
+    }catch(err){ break; }
+  }
+}
+
 /* ===== 검색 ===== */
-let lastHits=[];
 async function runSearch(){
   const q=$('#findQ').value.trim(), state=$('#findState'), list=$('#findList');
   list.innerHTML='';
@@ -443,7 +484,7 @@ async function runSearch(){
   try{
     const res=await fetch(`${PROXY_URL}?q=${encodeURIComponent(q)}&size=15`);
     const data=await res.json();
-    if(!data.ok){ state.className='msg warn'; state.textContent=data.message||'검색에 실패했습니다. 잠시 뒤 다시 해보세요.'; return; }
+    if(!data.ok){ state.className='msg warn'; state.textContent=data.message||'검색에 실패했습니다.'; return; }
     if(!data.items.length){ state.className='msg'; state.textContent='찾은 책이 없습니다. 더 짧은 말로 바꿔보세요.'; return; }
     state.hidden=true; lastHits=data.items;
     list.innerHTML=data.items.map(cardHit).join('');
@@ -454,8 +495,7 @@ async function runSearch(){
 
 /* ===== 담기 / 정하기 / 빼기 ===== */
 function addCand(b){
-  const id=idOf(b);
-  if(inCands(id)){ toast('이미 담은 책입니다.'); return; }
+  if(inCands(idOf(b))){ toast('이미 담은 책입니다.'); return; }
   cands.push(b); save(); refreshAll(); toast('담았습니다.');
 }
 function removeCand(id){
@@ -463,21 +503,17 @@ function removeCand(id){
   if(finalId===id) finalId=null;
   save(); refreshAll(); toast('뺐습니다.');
 }
-function toggleCand(b){
-  const id=idOf(b);
-  if(inCands(id)) removeCand(id); else addCand(b);
-}
+function toggleCand(b){ inCands(idOf(b)) ? removeCand(idOf(b)) : addCand(b); }
 function setFinal(b){
-  const id=idOf(b);
-  if(!inCands(id)) cands.push(b);
-  finalId=id; save(); refreshAll(); toast('읽을 책으로 정했습니다.');
+  if(!inCands(idOf(b))) cands.push(b);
+  finalId=idOf(b); save(); refreshAll(); toast('읽을 책으로 정했습니다.');
 }
 
 document.addEventListener('click', e=>{
   const li=e.target.closest('.book'); if(!li) return;
   const b=JSON.parse(li.dataset.book);
   if(e.target.closest('[data-toggle]')){ toggleCand(b); return; }
-  openDialog(b); // 카드 어디를 눌러도 팝업
+  openDialog(b);
 });
 
 /* ===== 팝업 ===== */
@@ -485,32 +521,38 @@ const dlg=$('#dlg');
 function openDialog(b){
   openBook=b;
   $('#dTitle').textContent=b.title;
-  const who=[b.author, b.trans?`옮김 ${b.trans}`:'', b.pub, b.year].filter(Boolean).join(' · ');
-  $('#dWho').textContent=who;
+  $('#dWho').textContent=[b.author, b.trans?`옮김 ${b.trans}`:'', b.pub, b.year?b.year+'년':''].filter(Boolean).join(' · ');
+
   const img=$('#dThumb');
   if(b.thumb){ img.src=b.thumb; img.hidden=false; } else { img.removeAttribute('src'); img.hidden=true; }
 
   const teach=$('#dTeacher');
   if(b.note){ teach.textContent=b.note; teach.hidden=false; } else teach.hidden=true;
 
-  const intro=$('#dIntro');
-  if(b.contents){ intro.textContent=b.contents+'…'; intro.hidden=false; } else intro.hidden=true;
+  const introWrap=$('#dIntroWrap');
+  if(b.contents){ $('#dIntro').textContent=b.contents+'…'; introWrap.hidden=false; } else introWrap.hidden=true;
+
+  const cau=$('#dCaution');
+  if(b.vary){
+    cau.textContent='이 책은 옮긴이와 출판사가 다른 판본이 여러 종 있습니다. 표지와 ISBN은 그중 한 판본이니, 실제로 읽는 책에 맞춰 기록장에 적으세요.';
+    cau.hidden=false;
+  } else cau.hidden=true;
 
   const facts=[];
   if(b.unit) facts.push(['교과 단원', b.unit]);
   if(b.genre) facts.push(['종류', b.genre]);
   if(b.level) facts.push(['난이도', b.level]);
   if(b.len) facts.push(['분량', b.len]);
-  if(b.pub) facts.push(['출판사', b.pub]);
-  if(b.year) facts.push(['출간', b.year+'년']);
+  if(b.pub) facts.push([b.vary?'출판사':'출판사', b.pub]);
+  if(b.kpub && b.vary) facts.push(['표지의 판본', b.kpub+(b.year?' · '+b.year+'년':'')]);
+  if(b.year && !b.vary) facts.push(['출간', b.year+'년']);
   if(b.isbn) facts.push(['ISBN', b.isbn]);
   facts.push(['쪽수','책을 받아 직접 확인하세요']);
   $('#dFacts').innerHTML=facts.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('');
 
   if(b.url){ $('#dLink').href=b.url; $('#dLinkWrap').hidden=false; } else $('#dLinkWrap').hidden=true;
 
-  const on=inCands(idOf(b));
-  $('#dPick').textContent = on ? '담은 책에서 빼기' : '이 책 담기';
+  $('#dPick').textContent = inCands(idOf(b)) ? '담은 책에서 빼기' : '이 책 담기';
   $('#dFinal').hidden = finalId===idOf(b);
 
   if(typeof dlg.showModal==='function') dlg.showModal(); else dlg.setAttribute('open','');
@@ -523,8 +565,8 @@ dlg.addEventListener('click', e=>{ if(e.target===dlg) closeDialog(); });
 
 /* ===== 담은 책 화면 ===== */
 function renderMy(){
-  const fin = cands.find(b=>idOf(b)===finalId) || null;
-  $('#finalCard').hidden = !fin;
+  const fin=cands.find(b=>idOf(b)===finalId)||null;
+  $('#finalCard').hidden=!fin;
   if(fin){
     $('#mTitle').textContent=fin.title||'';
     $('#mAuthor').textContent=fin.author||'(확인 필요)';
@@ -533,40 +575,34 @@ function renderMy(){
     $('#mIsbn').textContent=fin.isbn||'(책 뒷면 바코드 위 숫자)';
     $('#mUnit').textContent=fin.unit||'읽으면서 찾아 적기';
   }
-  const others = cands.filter(b=>idOf(b)!==finalId);
-  $('#myEmpty').hidden = cands.length>0;
-  $('#candTitle').hidden = others.length===0;
-  $('#clearWrap').hidden = cands.length===0;
-  $('#candList').innerHTML = others.map(b=>{
+  const others=cands.filter(b=>idOf(b)!==finalId);
+  $('#myEmpty').hidden=cands.length>0;
+  $('#candTitle').hidden=others.length===0;
+  $('#clearWrap').hidden=cands.length===0;
+  $('#candList').innerHTML=others.map(b=>{
     const id=esc(idOf(b));
     return `<li class="candrow">
-      <div class="t">
-        <h4>${esc(b.title)}</h4>
-        <p>${esc([b.author,b.pub].filter(Boolean).join(' · '))}</p>
-      </div>
+      ${b.thumb?`<img class="cover" src="${esc(b.thumb)}" alt="" loading="lazy">`:''}
+      <div class="t"><h4>${esc(b.title)}</h4><p>${esc([b.author,b.pub].filter(Boolean).join(' · '))}</p></div>
       <div class="ops">
-        <button class="mini seal" data-final="${id}">이걸로</button>
+        <button class="mini go" data-final="${id}">이걸로</button>
         <button class="mini del" data-del="${id}">빼기</button>
-      </div>
-    </li>`;
+      </div></li>`;
   }).join('');
-
   const badge=$('#candBadge');
-  badge.textContent = cands.length || '';
-  badge.hidden = cands.length===0;
+  badge.textContent=cands.length||''; badge.hidden=cands.length===0;
 }
 
 $('#candList').addEventListener('click', e=>{
   const f=e.target.closest('[data-final]'), d=e.target.closest('[data-del]');
   if(f){ const b=cands.find(x=>idOf(x)===f.dataset.final); if(b) setFinal(b); }
-  if(d){ removeCand(d.dataset.del); }
+  if(d) removeCand(d.dataset.del);
 });
 $('#unfinalBtn').addEventListener('click', ()=>{ finalId=null; save(); refreshAll(); toast('정한 것을 취소했습니다. 담은 책에는 그대로 있습니다.'); });
 $('#clearAllBtn').addEventListener('click', ()=>{
   if(!confirm('담은 책을 모두 지울까요?')) return;
   cands=[]; finalId=null; save(); refreshAll(); toast('모두 비웠습니다.');
 });
-
 $('#copyBtn').addEventListener('click', async ()=>{
   const b=cands.find(x=>idOf(x)===finalId); if(!b) return;
   const text=[`서명: ${b.title}`,`저자: ${b.author||''}`,`출판사: ${b.pub||''}`,
@@ -579,7 +615,6 @@ $('#copyBtn').addEventListener('click', async ()=>{
   }
 });
 
-/* ===== 갱신 ===== */
 function refreshAll(){
   renderRec();
   if(lastHits.length) $('#findList').innerHTML=lastHits.map(cardHit).join('');
@@ -590,7 +625,7 @@ $('#recQ').addEventListener('input', renderRec);
 $('#findBtn').addEventListener('click', runSearch);
 $('#findQ').addEventListener('keydown', e=>{ if(e.key==='Enter') runSearch(); });
 
-load(); buildChips(); refreshAll();
+load(); buildChips(); refreshAll(); enrichBooks();
 </script>
 </body>
 </html>
