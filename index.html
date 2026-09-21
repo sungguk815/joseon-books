@@ -29,6 +29,19 @@ html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:10
 body{margin:0;background:var(--paper);color:var(--ink);
   font-family:"IBM Plex Sans KR",system-ui,sans-serif;font-size:15px;line-height:1.65}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px 120px}
+@media (min-width:900px){
+  .wrap{max-width:1080px;padding:0 28px 80px}
+  header{padding:22px 0 14px}
+  header h1{font-size:28px}
+  ul.list{grid-template-columns:1fr 1fr;gap:12px}
+  ul.cands{grid-template-columns:1fr 1fr}
+  .files{grid-template-columns:1fr 1fr}
+  dialog{max-width:640px}
+}
+@media (min-width:1200px){
+  .wrap{max-width:1280px;padding:0 32px 72px}
+  ul.list{grid-template-columns:1fr 1fr 1fr}
+}
 
 body::before{content:"";position:fixed;top:0;left:0;right:0;height:5px;z-index:40;
   background:linear-gradient(90deg,var(--u1) 0 20%,var(--u3) 20% 40%,var(--u5) 40% 60%,var(--u4) 60% 80%,var(--u2) 80% 100%)}
