@@ -201,6 +201,59 @@ dialog::backdrop{background:rgba(27,36,48,.45)}
   opacity:0;pointer-events:none;transition:opacity .2s;z-index:30;max-width:90vw;text-align:center}
 #toast.on{opacity:1}
 
+.gcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 17px;margin-bottom:12px}
+.gcard h2{font-family:"Gowun Batang",serif;font-size:18px;font-weight:700;margin:0 0 10px;line-height:1.4}
+.gcard p{margin:0 0 8px;font-size:14px;color:#3D444E}
+.gcard p:last-child{margin-bottom:0}
+.gintro{background:linear-gradient(135deg,var(--u1-b),var(--u2-b));border-color:#D6DEEC}
+.gintro p{font-size:14.5px;color:var(--ink)}
+.gintro p:last-child{font-weight:600;color:var(--u1-f)}
+details.gfold{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px;overflow:hidden}
+details.gfold summary{list-style:none;cursor:pointer;padding:14px 17px;display:flex;align-items:center;gap:10px;
+  font-family:"Gowun Batang",serif;font-size:17px;font-weight:700}
+details.gfold summary::-webkit-details-marker{display:none}
+details.gfold summary::after{content:"";margin-left:auto;width:9px;height:9px;border-right:2px solid var(--muted);
+  border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform .2s}
+details.gfold[open] summary::after{transform:rotate(-135deg)}
+details.gfold .in{padding:0 17px 16px}
+.why{border-left:4px solid var(--c,var(--u1));padding:2px 0 2px 12px;margin:0 0 14px}
+.why:last-child{margin-bottom:0}
+.why h3{font-size:14.5px;font-weight:600;margin:0 0 4px;color:var(--c,var(--u1))}
+.why p{font-size:13.5px;margin:0;color:#3D444E}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (min-width:620px){.steps{grid-template-columns:repeat(4,1fr)}}
+.step{border-radius:9px;padding:12px;background:var(--b);border-top:4px solid var(--c)}
+.step .n{font-size:11.5px;font-weight:600;color:var(--c)}
+.step h3{font-size:15px;font-weight:600;margin:2px 0 6px;color:var(--ink)}
+.step p{font-size:12.5px;margin:0 0 8px;color:#3D444E;line-height:1.55}
+.step .out{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--card);color:var(--c)}
+.when{margin:12px 0 0;display:grid;grid-template-columns:auto 1fr;gap:6px 10px;font-size:13.5px}
+.when dt{font-weight:600;color:var(--u1-f)}
+.when dd{margin:0}
+.caveat{background:var(--u4-b);border:1px solid #EFC9C2;border-left:5px solid var(--u4)}
+.caveat h2{color:var(--u4-f)}
+.caveat ul{margin:0;padding-left:18px;font-size:13.5px;color:#3D444E}
+.caveat li{margin-bottom:5px}
+.caveat strong{color:var(--u4-f)}
+.rub h3{font-size:14.5px;font-weight:600;margin:4px 0 8px}
+.rub ol{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:6px}
+.rub li{display:flex;gap:10px;font-size:13px;color:#3D444E;line-height:1.55}
+.rub .sc{flex:0 0 38px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:600;background:var(--sb);color:var(--sf)}
+.files{display:grid;gap:10px}
+.file{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:13px 15px}
+.file .ic{width:34px;height:42px;flex:0 0 auto;border-radius:4px;background:var(--u4);color:#fff;
+  display:flex;align-items:flex-end;justify-content:center;font-size:10px;font-weight:600;padding-bottom:5px}
+.file .tx{flex:1;min-width:0}
+.file b{display:block;font-size:14px;font-weight:600;line-height:1.4}
+.file small{font-size:12px;color:var(--muted)}
+.file .ops{display:flex;gap:6px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
+.file a{text-decoration:none}
+.previews{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.previews figure{margin:0}
+.previews a{display:block;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff}
+.previews img{display:block;width:100%;height:auto}
+.previews figcaption{font-size:12px;color:var(--muted);text-align:center;margin-top:5px}
 footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
 [hidden]{display:none !important}
 </style>
@@ -215,7 +268,8 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
 </header>
 
 <nav role="tablist">
-  <button role="tab" id="tab-rec" aria-controls="panel-rec" aria-selected="true">추천 목록</button>
+  <button role="tab" id="tab-guide" aria-controls="panel-guide" aria-selected="true">안내</button>
+  <button role="tab" id="tab-rec" aria-controls="panel-rec" aria-selected="false">추천 목록</button>
   <button role="tab" id="tab-find" aria-controls="panel-find" aria-selected="false">직접 찾기</button>
   <button role="tab" id="tab-my" aria-controls="panel-my" aria-selected="false">담은 책<span class="badge" id="candBadge" hidden></span></button>
 </nav>
@@ -231,7 +285,132 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
   </span>
 </a>
 
-<section id="panel-rec" role="tabpanel" aria-labelledby="tab-rec">
+<section id="panel-guide" role="tabpanel" aria-labelledby="tab-guide">
+
+  <div class="gcard gintro">
+    <p>교과서가 한 줄로 지나간 조선의 이야기를, 한 권의 책으로 직접 읽어봅니다.</p>
+    <p>읽는 동안 떠오른 생각과 질문을 기록하고, 교과서와 견주어 보며 스스로 역사를 해석합니다.</p>
+    <p>책을 덮은 뒤 새로운 궁금증이 남는다면, 그것이 이 활동의 진짜 결과입니다.</p>
+  </div>
+
+  <div class="gcard">
+    <h2>수행 과정 <span style="color:var(--u4-f)">30점</span></h2>
+    <ol class="steps">
+      <li class="step" style="--c:var(--u5);--b:var(--u5-b)">
+        <span class="n">준비</span><h3>책 선정</h3>
+        <p>조선시대를 다룬 책 1권 선택, 책 정보와 선정 이유 작성</p>
+        <span class="out">구글 클래스룸 제출</span>
+      </li>
+      <li class="step" style="--c:var(--u1);--b:var(--u1-b)">
+        <span class="n">1차시</span><h3>독서 중 기록</h3>
+        <p>읽은 내용, 인상 깊은 사실, 나의 생각, 교과서 연결 작성</p>
+        <span class="out">양식1 · 15점</span>
+      </li>
+      <li class="step" style="--c:var(--u3);--b:var(--u3-b)">
+        <span class="n">읽기</span><h3>책 완독</h3>
+        <p>마감일까지 끝까지 읽고, 읽는 동안 생긴 궁금증 정리</p>
+        <span class="out">스스로</span>
+      </li>
+      <li class="step" style="--c:var(--u2);--b:var(--u2-b)">
+        <span class="n">2차시</span><h3>독서 후 기록</h3>
+        <p>주요 내용과 역사적 의미, 교과서와 비교, 더 탐구하고 싶은 내용 작성</p>
+        <span class="out">양식2 · 15점</span>
+      </li>
+    </ol>
+    <dl class="when">
+      <dt>1차시</dt><dd>독서 중 기록 제출 (역사 수업 시간)</dd>
+      <dt>2차시</dt><dd>독서 후 기록 제출 (역사 수업 시간)</dd>
+    </dl>
+  </div>
+
+  <div class="gcard caveat">
+    <h2>주의사항</h2>
+    <ul>
+      <li>작성 시간에는 <strong>도서와 교과서가 반드시 필요</strong>합니다.</li>
+      <li>미리 작성하거나 출력한 자료(출력물, 접착식 메모지 등)는 가져올 수 없습니다. <strong>전자기기 사용도 불가</strong>합니다.</li>
+      <li>자신의 독서 경험을 진솔하게 작성하는 것으로 평가합니다. <strong>부정행위는 0점</strong> 처리됩니다.</li>
+      <li>준비물: 도서, 교과서, 볼펜, 샤프(연필), 수정테이프, 지우개</li>
+    </ul>
+  </div>
+
+  <details class="gfold">
+    <summary>수행평가 취지</summary>
+    <div class="in">
+      <div class="why" style="--c:var(--u4)">
+        <h3>교과서는 너무 짧습니다</h3>
+        <p>임진왜란이 교과서에 몇 쪽이나 나오는지 아나요? 두 쪽입니다. 7년 동안 이어진 전쟁인데 말이죠. 사화는 네 번이나 일어났는데 한 쪽, 농민들이 들고일어난 일은 몇 줄로 끝납니다. 이렇게 짧으니 외울 건 많고 재미는 없습니다. 당연합니다. 사람 이야기가 다 빠져 있으니까요. 그 빠진 이야기를 직접 읽어보자는 것이 이 활동입니다.</p>
+      </div>
+      <div class="why" style="--c:var(--u1)">
+        <h3>역사는 '읽어야' 보입니다</h3>
+        <p>정리된 결론을 받아들이는 것만으로는 역사를 보는 눈이 자라지 않습니다. 사건이 어떻게 흘러갔는지 따라가 보고, 인물이 왜 그런 선택을 했는지 지켜보고, "나라면 어땠을까"를 스스로 물어볼 때 비로소 자랍니다. 그러려면 어느 정도 분량을 끝까지 읽어내는 시간이 필요합니다. 그래서 3주라는 시간을 드립니다.</p>
+      </div>
+      <div class="why" style="--c:var(--u3)">
+        <h3>교과서와 책 사이를 오가 봅시다</h3>
+        <p>이 활동에서 가장 중요한 것은 기록할 때마다 교과서의 어느 단원, 몇 쪽과 연결되는지 찾아보는 일입니다. 조금 귀찮을 수 있습니다. 하지만 해보면 알게 됩니다. 교과서에서 한 줄로 배운 내용이 책에서는 한 장으로 펼쳐지는 순간, 같은 사건을 두 책이 다르게 설명하는 장면을 마주하는 순간. 그때 이런 생각이 들 겁니다. "역사는 하나로 정해진 이야기가 아니구나." 이것이 역사 공부에서 가장 중요한 태도입니다.</p>
+      </div>
+      <div class="why" style="--c:var(--u2)">
+        <h3>여기서 끝나지 않기를 바랍니다</h3>
+        <p>기록장의 마지막 칸은 "더 알아보고 싶은 것"입니다. 이 활동이 잘된 것인지는 기록지를 얼마나 꼼꼼히 채웠는지로 정해지지 않습니다. 수행평가가 끝난 뒤에도 여러분이 다음 책을 집어드는지로 정해집니다. 궁금증이 하나만 남아도 충분합니다. 그러면 이 활동은 성공입니다.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="gfold">
+    <summary>채점기준</summary>
+    <div class="in rub">
+      <h3>독서 중 기록 (15점)</h3>
+      <ol>
+        <li><span class="sc" style="--sb:var(--u6-b);--sf:var(--u6-f)">15</span><span>독서 내용, 인상 깊은 역사적 사실, 자신의 생각 또는 질문을 모두 기록하고, 읽은 내용과 교과서의 관련 내용을 구체적으로 연결하여 기록함. 또한 이후 더 알아보고 싶은 역사적 내용을 제시함.</span></li>
+        <li><span class="sc" style="--sb:var(--u1-b);--sf:var(--u1-f)">12</span><span>독서 내용과 인상 깊은 역사적 사실, 자신의 생각 또는 질문을 기록하고, 읽은 내용과 교과서 내용의 관련성을 제시함.</span></li>
+        <li><span class="sc" style="--sb:var(--u5-b);--sf:var(--u5-f)">9</span><span>독서 내용을 기록하고 인상 깊은 내용이나 자신의 생각·질문을 일부 제시하였으나, 교과서 내용과의 관련성이 구체적으로 나타나지 않거나 기록 항목 일부가 누락됨.</span></li>
+        <li><span class="sc" style="--sb:var(--u4-b);--sf:var(--u4-f)">6</span><span>독서 기록은 작성하였으나 독서 내용의 기록이 단편적이거나, 자신의 생각·질문 및 교과서 내용과의 관련성 가운데 대부분이 누락됨.</span></li>
+        <li><span class="sc" style="--sb:var(--all-b);--sf:var(--all-f)">3</span><span>기본점수</span></li>
+      </ol>
+      <h3>독서 후 기록 (15점)</h3>
+      <ol>
+        <li><span class="sc" style="--sb:var(--u6-b);--sf:var(--u6-f)">15</span><span>도서의 주요 내용을 정리하고, 책에서 다룬 조선시대의 역사적 사실 또는 의미를 구체적으로 설명함. 또한 교과서의 관련 내용과 비교·연결하여 공통점·차이점 또는 새롭게 알게 된 점을 제시하고, 독서를 통해 생긴 궁금증이나 관심 주제를 바탕으로 추가로 탐구하거나 읽고 싶은 내용을 구체적으로 제시함.</span></li>
+        <li><span class="sc" style="--sb:var(--u1-b);--sf:var(--u1-f)">12</span><span>도서의 주요 내용을 정리하고 조선시대의 역사적 사실이나 의미를 설명함. 또한 교과서의 관련 내용과 연결하여 새롭게 알게 된 점이나 자신의 생각을 제시하고, 더 알아보고 싶은 내용을 제시함.</span></li>
+        <li><span class="sc" style="--sb:var(--u5-b);--sf:var(--u5-f)">9</span><span>도서의 주요 내용을 정리하고 역사적 사실이나 자신의 생각을 일부 제시하였으나, 교과서 내용과의 비교·연결 또는 독서 이후의 탐구·확장 내용이 구체적으로 나타나지 않음.</span></li>
+        <li><span class="sc" style="--sb:var(--u4-b);--sf:var(--u4-f)">6</span><span>독서 후 기록은 작성하였으나 도서 내용의 정리가 단편적이며, 역사적 의미, 교과서 내용과의 비교·연결, 독서의 확장 가운데 대부분이 누락됨.</span></li>
+        <li><span class="sc" style="--sb:var(--all-b);--sf:var(--all-f)">3</span><span>기본점수</span></li>
+      </ol>
+    </div>
+  </details>
+
+  <div class="gcard">
+    <h2>자료 받기</h2>
+    <div class="files">
+      <div class="file">
+        <span class="ic">PDF</span>
+        <span class="tx"><b>수행평가 안내문</b><small>취지 · 과정 · 주의사항 · 채점기준 (2쪽)</small></span>
+        <span class="ops">
+          <a class="mini" href="files/guide.pdf" target="_blank" rel="noopener">열어보기</a>
+          <a class="mini go" href="files/guide.pdf" download="2026-2학기_3학년_역사_수행평가②_조선_역사_읽기와_탐구_안내.pdf">받기</a>
+        </span>
+      </div>
+      <div class="file">
+        <span class="ic">PDF</span>
+        <span class="tx"><b>기록지 양식 1·2</b><small>독서 중 기록 · 독서 후 기록 (2쪽)</small></span>
+        <span class="ops">
+          <a class="mini" href="files/worksheet.pdf" target="_blank" rel="noopener">열어보기</a>
+          <a class="mini go" href="files/worksheet.pdf" download="2026-2학기_3학년_역사_수행평가②_조선_역사_읽기와_탐구_기록지.pdf">받기</a>
+        </span>
+      </div>
+    </div>
+    <div class="previews">
+      <figure>
+        <a href="files/worksheet-1.jpg" target="_blank" rel="noopener"><img src="files/worksheet-1.jpg" alt="기록지 1 독서 중 기록 양식" loading="lazy"></a>
+        <figcaption>양식1 · 독서 중 기록</figcaption>
+      </figure>
+      <figure>
+        <a href="files/worksheet-2.jpg" target="_blank" rel="noopener"><img src="files/worksheet-2.jpg" alt="기록지 2 독서 후 기록 양식" loading="lazy"></a>
+        <figcaption>양식2 · 독서 후 기록</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="panel-rec" role="tabpanel" aria-labelledby="tab-rec" hidden>
   <div class="search"><input id="recQ" type="search" placeholder="제목이나 저자로 걸러보기" autocomplete="off"></div>
   <p class="filterlabel">교과서 단원</p>
   <div class="chiprow" id="unitChips"></div>
@@ -432,13 +611,17 @@ function saveEnrich(){ try{ localStorage.setItem(EKEY, JSON.stringify({ts:Date.n
 const inCands = id => cands.some(b=>idOf(b)===id);
 
 /* ===== 탭 ===== */
-const TABS=[['#tab-rec','#panel-rec'],['#tab-find','#panel-find'],['#tab-my','#panel-my']];
-TABS.forEach(([t,p])=>{
-  $(t).addEventListener('click',()=>{
-    TABS.forEach(([t2,p2])=>{ const on=t2===t; $(t2).setAttribute('aria-selected',on); $(p2).hidden=!on; });
-    window.scrollTo({top:0});
-  });
-});
+const TABS=[['#tab-guide','#panel-guide'],['#tab-rec','#panel-rec'],['#tab-find','#panel-find'],['#tab-my','#panel-my']];
+const TKEY='joseon-tab';
+function showTab(t){
+  TABS.forEach(([t2,p2])=>{ const on=t2===t; $(t2).setAttribute('aria-selected',on); $(p2).hidden=!on; });
+  try{ localStorage.setItem(TKEY,t); }catch(e){}
+}
+TABS.forEach(([t])=>{ $(t).addEventListener('click',()=>{ showTab(t); window.scrollTo({top:0}); }); });
+(function(){ // 처음이면 안내, 다시 오면 마지막에 보던 탭
+  let t=null; try{ t=localStorage.getItem(TKEY); }catch(e){}
+  if(t && TABS.some(([x])=>x===t)) showTab(t);
+})();
 
 /* ===== 필터 ===== */
 let fUnit='all', fGenre='', fLevel='';
