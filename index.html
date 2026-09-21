@@ -39,7 +39,8 @@ header .who{margin:0 0 7px;font-size:12.5px;color:var(--indigo);font-weight:500}
 header h1{font-family:"Gowun Batang",serif;font-weight:700;font-size:26px;line-height:1.35;margin:0 0 6px;letter-spacing:-.01em}
 header p{margin:0;color:var(--muted);font-size:13.5px}
 
-nav{display:flex;gap:2px;margin:18px 0 16px;background:#E8E7DF;padding:3px;border-radius:var(--radius)}
+nav{display:flex;gap:2px;margin:12px 0 16px;background:#E8E7DF;padding:3px;border-radius:var(--radius);
+  position:sticky;top:5px;z-index:20}
 nav button{flex:1;border:0;background:transparent;padding:9px 4px;border-radius:8px;
   font-family:inherit;font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer}
 nav button[aria-selected="true"]{background:var(--card);color:var(--indigo);font-weight:600;
@@ -66,8 +67,7 @@ nav button:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
   background:linear-gradient(140deg,var(--u1),#3E63A0);color:#fff;
   font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap}
 
-.chiprow{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:4px;-webkit-overflow-scrolling:touch}
-.chiprow::-webkit-scrollbar{display:none}
+.chiprow{display:flex;flex-wrap:wrap;gap:6px;padding-bottom:8px;margin-bottom:4px}
 .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--muted);
   padding:6px 12px;border-radius:999px;font-family:inherit;font-size:13px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
@@ -158,25 +158,29 @@ ul.list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .btn.primary{background:linear-gradient(140deg,var(--u1),#3E63A0);border-color:var(--u1);color:#fff}
 .btn.quiet{color:var(--muted)}
 .btn:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
+a.btn{text-decoration:none;display:inline-block}
 
 .section-title{font-size:13px;color:var(--muted);margin:22px 0 8px}
 ul.cands{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .candrow{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:11px 13px;
-  display:flex;gap:11px;align-items:center}
+  display:flex;gap:11px;align-items:flex-start}
 .candrow .cover{width:40px;height:57px}
 .candrow .t{flex:1;min-width:0}
 .candrow h4{font-family:"Gowun Batang",serif;font-size:16px;font-weight:700;margin:0 0 2px;line-height:1.4}
 .candrow p{margin:0;font-size:12.5px;color:var(--muted)}
+.candrow .tags{margin:6px 0 4px}
+.candrow .note{margin:0;font-size:13px;color:#454C56}
 .candrow .ops{display:flex;flex-direction:column;gap:5px;flex:0 0 auto}
 .mini{border:1px solid var(--line);background:transparent;color:var(--ink);padding:5px 10px;border-radius:7px;
   font-family:inherit;font-size:12.5px;cursor:pointer;white-space:nowrap}
-.mini.go{border-color:var(--seal);color:var(--seal)}
+.mini.go{border-color:var(--seal);background:var(--seal);color:#fff;font-weight:600;padding:7px 12px}
 .mini.del{color:var(--muted)}
 
 dialog{border:0;padding:0;border-radius:14px;max-width:560px;width:calc(100% - 28px);
   background:var(--card);color:var(--ink);box-shadow:0 12px 40px rgba(27,36,48,.22)}
+dialog[open]{display:flex;flex-direction:column;max-height:82vh}
 dialog::backdrop{background:rgba(27,36,48,.45)}
-.dlg{padding:20px;max-height:82vh;overflow:auto}
+.dlg{padding:20px;overflow:auto;flex:1;min-height:0}
 .dlghead{display:flex;gap:15px;margin-bottom:15px}
 .dlghead .cover{width:92px;height:131px}
 .dlghead .t{flex:1;min-width:0}
@@ -186,6 +190,9 @@ dialog::backdrop{background:rgba(27,36,48,.45)}
   font-size:13.5px;color:#3D444E;margin:0 0 14px}
 .introlabel{font-size:12.5px;color:var(--muted);margin:0 0 5px}
 .intro{font-size:14px;color:#3D444E;margin:0 0 14px;line-height:1.72}
+details.dintro{margin:0 0 14px;border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+details.dintro summary{cursor:pointer;font-size:12.5px;color:var(--muted)}
+details.dintro .intro{margin:8px 0 0}
 .dlgbody dl{margin:0 0 12px;display:grid;grid-template-columns:76px 1fr;gap:7px 10px;font-size:13.5px;
   border-top:1px solid var(--line);padding-top:14px}
 .dlgbody dt{color:var(--muted);font-size:12.5px}
@@ -193,8 +200,10 @@ dialog::backdrop{background:rgba(27,36,48,.45)}
 .caution{font-size:12.5px;color:var(--u5-f);background:var(--u5-b);border-left:4px solid var(--u5);
   border-radius:0 6px 6px 0;padding:9px 12px;margin:0 0 12px}
 .dlglink{font-size:13px;color:var(--indigo)}
+button.dlglink{background:none;border:0;padding:0;cursor:pointer;font:inherit}
 .credit{font-size:11.5px;color:var(--muted);margin:10px 0 0}
-.dlgfoot{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
+.dlgfoot{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);
+  padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:var(--card);flex-shrink:0}
 
 #toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
   background:var(--ink);color:#fff;padding:11px 18px;border-radius:999px;font-size:13.5px;
@@ -207,7 +216,8 @@ dialog::backdrop{background:rgba(27,36,48,.45)}
 .gcard p:last-child{margin-bottom:0}
 .gintro{background:linear-gradient(135deg,var(--u1-b),var(--u2-b));border-color:#D6DEEC}
 .gintro p{font-size:14.5px;color:var(--ink)}
-.gintro p:last-child{font-weight:600;color:var(--u1-f)}
+.gintro p:last-of-type{font-weight:600;color:var(--u1-f)}
+.gintro .btn{margin-top:10px}
 details.gfold{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px;overflow:hidden}
 details.gfold summary{list-style:none;cursor:pointer;padding:14px 17px;display:flex;align-items:center;gap:10px;
   font-family:"Gowun Batang",serif;font-size:17px;font-weight:700}
@@ -291,6 +301,7 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
     <p>교과서가 한 줄로 지나간 조선의 이야기를, 한 권의 책으로 직접 읽어봅니다.</p>
     <p>읽는 동안 떠오른 생각과 질문을 기록하고, 교과서와 견주어 보며 스스로 역사를 해석합니다.</p>
     <p>책을 덮은 뒤 새로운 궁금증이 남는다면, 그것이 이 활동의 진짜 결과입니다.</p>
+    <button type="button" class="btn primary" id="goRec">추천 목록에서 고르기</button>
   </div>
 
   <div class="gcard">
@@ -434,7 +445,7 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
 <section id="panel-my" role="tabpanel" aria-labelledby="tab-my" hidden>
   <div id="finalCard" class="slip" hidden>
     <h2>읽기로 정한 책</h2>
-    <p class="lead">아래 내용을 기록장 맨 앞장에 옮겨 적으세요.</p>
+    <p class="lead">아래를 순서대로 하세요.</p>
     <dl>
       <dt>서명</dt><dd id="mTitle"></dd>
       <dt>저자</dt><dd id="mAuthor"></dd>
@@ -444,8 +455,9 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
       <dt>교과 단원</dt><dd id="mUnit"></dd>
     </dl>
     <div class="slipactions">
-      <button class="btn primary" id="copyBtn">내용 복사</button>
-      <button class="btn" id="libBtn">도서관에서 찾기</button>
+      <button class="btn primary" id="copyBtn">1. 내용 복사</button>
+      <button class="btn" id="libBtn">2. 도서관에서 찾기</button>
+      <a class="btn" href="worksheet.pdf" download="2026-2학기_3학년_역사_수행평가②_조선_역사_읽기와_탐구_기록지.pdf">3. 기록지 받기</a>
       <button class="btn quiet" id="unfinalBtn">정한 것 취소</button>
     </div>
   </div>
@@ -475,21 +487,21 @@ footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-si
     </div>
     <div class="dlgbody">
       <div id="dTeacher" class="teacher" hidden></div>
-      <div id="dIntroWrap" hidden>
-        <p class="introlabel">책 소개</p>
+      <details class="dintro" id="dIntroWrap" hidden>
+        <summary>책 소개</summary>
         <p id="dIntro" class="intro"></p>
-      </div>
+      </details>
       <p id="dCaution" class="caution" hidden></p>
       <dl id="dFacts"></dl>
       <p id="dLinkWrap" hidden><a id="dLink" class="dlglink" href="#" target="_blank" rel="noopener">책 정보 더 보기</a></p>
+      <p><button type="button" class="dlglink" id="dLib">도서관에서 찾기</button></p>
       <p class="credit">표지·소개·ISBN은 카카오 책 정보에서 가져왔습니다.</p>
     </div>
-    <div class="dlgfoot">
-      <button class="btn primary" id="dPick">이 책 담기</button>
-      <button class="btn" id="dFinal">읽을 책으로 정하기</button>
-      <button class="btn" id="dLib">도서관에서 찾기</button>
-      <button class="btn quiet" id="dClose">닫기</button>
-    </div>
+  </div>
+  <div class="dlgfoot">
+    <button class="btn primary" id="dPick">이 책 담기</button>
+    <button class="btn" id="dFinal">이 책으로 정하기</button>
+    <button class="btn quiet" id="dClose">닫기</button>
   </div>
 </dialog>
 
@@ -615,9 +627,11 @@ const TABS=[['#tab-guide','#panel-guide'],['#tab-rec','#panel-rec'],['#tab-find'
 const TKEY='joseon-tab';
 function showTab(t){
   TABS.forEach(([t2,p2])=>{ const on=t2===t; $(t2).setAttribute('aria-selected',on); $(p2).hidden=!on; });
+  $('#libTop').hidden = t==='#tab-rec';
   try{ localStorage.setItem(TKEY,t); }catch(e){}
 }
 TABS.forEach(([t])=>{ $(t).addEventListener('click',()=>{ showTab(t); window.scrollTo({top:0}); }); });
+$('#goRec').addEventListener('click',()=>{ showTab('#tab-rec'); window.scrollTo({top:0}); });
 (function(){ // 처음이면 안내, 다시 오면 마지막에 보던 탭
   let t=null; try{ t=localStorage.getItem(TKEY); }catch(e){}
   if(t && TABS.some(([x])=>x===t)) showTab(t);
@@ -779,7 +793,9 @@ function removeCand(id){
 function toggleCand(b){ inCands(idOf(b)) ? removeCand(idOf(b)) : addCand(b); }
 function setFinal(b){
   if(!inCands(idOf(b))) cands.push(b);
-  finalId=idOf(b); save(); refreshAll(); toast('읽을 책으로 정했습니다.');
+  finalId=idOf(b); save(); refreshAll();
+  showTab('#tab-my'); window.scrollTo({top:0});
+  toast('읽을 책으로 정했습니다.');
 }
 
 document.addEventListener('click', e=>{
@@ -803,7 +819,8 @@ function openDialog(b){
   if(b.note){ teach.textContent=b.note; teach.hidden=false; } else teach.hidden=true;
 
   const introWrap=$('#dIntroWrap');
-  if(b.contents){ $('#dIntro').textContent=b.contents+'…'; introWrap.hidden=false; } else introWrap.hidden=true;
+  if(b.contents){ $('#dIntro').textContent=b.contents+'…'; introWrap.hidden=false; introWrap.open=false; }
+  else introWrap.hidden=true;
 
   const cau=$('#dCaution');
   if(b.vary){
@@ -870,9 +887,16 @@ function renderMy(){
   $('#clearWrap').hidden=cands.length===0;
   $('#candList').innerHTML=others.map(b=>{
     const id=esc(idOf(b));
+    const tags=[b.genre,b.level,b.unit].filter(Boolean)
+      .map(v=>`<span class="tag ${TAGC[v]||''}">${esc(v)}</span>`).join('');
     return `<li class="candrow">
       ${b.thumb?`<img class="cover" src="${esc(b.thumb)}" alt="" loading="lazy">`:''}
-      <div class="t"><h4>${esc(b.title)}</h4><p>${esc([b.author,b.pub].filter(Boolean).join(' · '))}</p></div>
+      <div class="t">
+        <h4>${esc(b.title)}</h4>
+        <p>${esc([b.author,b.pub].filter(Boolean).join(' · '))}</p>
+        ${tags?`<div class="tags">${tags}</div>`:''}
+        ${b.note?`<p class="note">${esc(b.note)}</p>`:''}
+      </div>
       <div class="ops">
         <button class="mini go" data-final="${id}">이걸로</button>
         <button class="mini del" data-del="${id}">빼기</button>
